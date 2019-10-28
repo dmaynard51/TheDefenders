@@ -1,3 +1,5 @@
+let score = 0, scoreText;
+
 class SceneMain extends Phaser.Scene {
     constructor() {
         super({ key: 'SceneMain' });
@@ -69,6 +71,15 @@ class SceneMain extends Phaser.Scene {
             laser: this.sound.add('sndLaser')
         };
 
+        // score text
+        scoreText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Score: 0', {
+            fontFamily: 'monospace',
+            fontSize: 24,
+            color: '#ffffff',
+            align: 'right'
+        });
+        scoreText.setOrigin(0.5);
+
         // scrolling background
         this.backgrounds = [];
         for (var i = 0; i < 3; i++) {
@@ -98,7 +109,7 @@ class SceneMain extends Phaser.Scene {
 
         // spawn enemies timer event
         this.time.addEvent({
-            delay: 1000,
+            delay: 1500,
             callback: function() {
                 var enemy = null;
 
@@ -142,6 +153,8 @@ class SceneMain extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     enemy.explode(true);
+                    score += 10;
+                    scoreText.setText('Score: ' + score);
             }
         });
 
@@ -153,6 +166,8 @@ class SceneMain extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 playerLaser.destroy();
+                score += 10;
+                scoreText.setText('Score: ' + score);
             }
         });
 
@@ -163,6 +178,8 @@ class SceneMain extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     laser.destroy();
+                    score += 10;
+                    scoreText.setText('Score: ' + score);
             }
         });
     }
