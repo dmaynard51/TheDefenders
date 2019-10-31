@@ -1,4 +1,14 @@
-let score = 0, scoreText;
+var score = 0, scoreText;
+
+var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+           [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]];
 
 class SceneMain extends Phaser.Scene {
     constructor() {
@@ -10,24 +20,25 @@ class SceneMain extends Phaser.Scene {
         this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
         this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
         this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
+        this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
 
         // spritesheets
         this.load.spritesheet('sprPlayer', 
             'assets/games/invaders/player.png', 
-            { frameWidth: 28, frameHeight: 21
-        });
+            { frameWidth: 28, frameHeight: 21 }
+        );
         this.load.spritesheet('sprEnemy0', 
             'assets/P3SpaceShooterContent/sprEnemy0.png', 
-            { frameWidth: 16, frameHeight: 16
-        });
+            { frameWidth: 16, frameHeight: 16 }
+        );
         this.load.spritesheet('sprEnemy2', 
             'assets/P3SpaceShooterContent/sprEnemy2.png', 
-            { frameWidth: 16, frameHeight: 16
-        });
+            { frameWidth: 16, frameHeight: 16 }
+        );
         this.load.spritesheet('sprExplosion', 
             'assets/P3SpaceShooterContent/sprExplosion.png', 
-            { frameWidth: 32, frameHeight: 32
-        });
+            { frameWidth: 32, frameHeight: 32 }
+        );
 
         // sfx
         this.load.audio('sndExplode0', 'assets/P3SpaceShooterContent/sndExplode0.wav');
@@ -36,6 +47,9 @@ class SceneMain extends Phaser.Scene {
     }
 
     create() {
+        // draw grid lines
+        this.drawLines();
+
         // animations
         this.anims.create({
             key: 'sprPlayer',
@@ -91,7 +105,7 @@ class SceneMain extends Phaser.Scene {
         this.player = new Player(
             this,
             this.game.config.width * 0.5,
-            this.game.config.height * 0.9,
+            this.game.config.height - 96,
             'sprPlayer'
         );
 
@@ -101,6 +115,10 @@ class SceneMain extends Phaser.Scene {
 
         // player fire w/ spacbar
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // place turrets
+        this.turrets = this.add.group({ classType: Turret});
+        this.input.on('pointerdown', this.placeTurret);
 
         // create enemy instance groups
         this.enemies = this.add.group();
@@ -193,6 +211,68 @@ class SceneMain extends Phaser.Scene {
             }
         }
         return arr;
+    }
+
+    drawLines(graphics) {
+        // top/enemy row
+        var graphics = this.add.graphics();
+        graphics.lineStyle(1, 0x85180f, 0.8);
+        graphics.moveTo(0, 64);
+        graphics.lineTo(this.game.config.width, 64);
+        /*for (var i = 0; i < (this.game.config.width / 64); i++) {
+            graphics.moveTo(i * 64, 0);
+            graphics.lineTo(i * 64, 64);
+        }*/
+        graphics.strokePath();
+
+        // player row
+        graphics = this.add.graphics();
+        graphics.lineStyle(1, 0x004a05, 0.8);
+        graphics.moveTo(0, this.game.config.height - 128);
+        graphics.lineTo(this.game.config.width, this.game.config.height - 128);
+        graphics.strokePath();
+
+        // bottom row
+        graphics = this.add.graphics();
+        graphics.lineStyle(1, 0x000987, 0.8);
+        graphics.moveTo(0, this.game.config.height - 64);
+        graphics.lineTo(this.game.config.width, this.game.config.height - 64);
+        for (var i = 0; i < (this.game.config.width / 64); i++) {
+            graphics.moveTo(i * 64, this.game.config.height);
+            graphics.lineTo(i * 64, this.game.config.height - 64);
+        }
+        graphics.strokePath();
+
+        // horizotal lines
+        graphics = this.add.graphics();
+        graphics.lineStyle(1, 0x333333, 0.8);
+        for (var i = 3; i < (this.game.config.height / 64) - 1; i++) {
+            graphics.moveTo(0, this.game.config.height - (i * 64));
+            graphics.lineTo(this.game.config.width, this.game.config.height - (i * 64));
+        }
+        // vertical lines
+        for (var i = 1; i < (this.game.config.width / 64); i++) {
+            graphics.moveTo(i * 64, this.game.config.height - 128);
+            graphics.lineTo(i * 64, 64);
+        }
+        graphics.strokePath();
+    }
+
+    placeTurret = (pointer) => {
+        var i = Math.floor(pointer.y / 64);
+        var j = Math.floor(pointer.x / 64);
+        if (this.canPlaceTurret(i, j)) {
+            var turret = this.turrets.get();
+            if (turret) {
+                turret.setActive(true);
+                turret.setVisible(true);
+                turret.place(i, j);
+            }   
+        }
+    }
+
+    canPlaceTurret(i, j) {
+        return map[i][j] === 0;
     }
 
     update() {
