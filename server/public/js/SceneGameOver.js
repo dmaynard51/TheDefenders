@@ -58,7 +58,7 @@ class SceneGameOver extends Phaser.Scene {
         // button texture when released
         this.btnRestart.on('pointerup', function() {
             this.btnRestart.setTexture('sprBtnRestart');
-            this.scene.start('SceneMain');
+            this.scene.start('SceneLevel1');
         }, this);
 
         // scrolling background
