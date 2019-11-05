@@ -1,4 +1,4 @@
-var score = 0, scoreText, lvlText;
+var score, scoreText, lvlText;
 
 var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -47,6 +47,9 @@ class SceneLevel1 extends Phaser.Scene {
     }
 
     create() {
+        // reset score
+        score = 0;
+
         // draw grid lines
         this.drawLines();
 
