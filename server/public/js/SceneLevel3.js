@@ -83,7 +83,7 @@ class SceneLevel3 extends Phaser.Scene {
         lvlText.setOrigin(0.5);
 
         // score text
-        scoreText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Score: 0', {
+        scoreText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Score: ' + score, {
             fontFamily: 'monospace',
             fontSize: 24,
             color: '#ffffff',
