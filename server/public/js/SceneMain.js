@@ -116,9 +116,19 @@ class SceneMain extends Phaser.Scene {
         // player fire w/ spacbar
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        // place turrets
+        // create turrets
         this.turrets = this.add.group({ classType: Turret});
+
+        // place turret on click
         this.input.on('pointerdown', this.placeTurret);
+
+        // towers
+        this.towers = this.add.group({
+            classType: Tower,
+            key: 'sprEnemy1',
+            repeat: 15,
+            setXY: { x: 32, y: this.game.config.height - 32, stepX: 64 }
+        });
 
         // create enemy instance groups
         this.enemies = this.add.group();
@@ -134,7 +144,7 @@ class SceneMain extends Phaser.Scene {
                 if (Phaser.Math.Between(0, 10) >= 3) {
                     enemy = new GunShip(
                         this,
-                        Phaser.Math.Between(0, this.game.config.width),
+                        (Phaser.Math.Between(0, 15) * 64) + 32,
                         0   
                     );
                 }
@@ -142,7 +152,7 @@ class SceneMain extends Phaser.Scene {
                     if (this.getEnemiesByType('ChaserShip').length < 5) {
                         enemy = new ChaserShip(
                             this,
-                            Phaser.Math.Between(0, this.game.config.width),
+                            (Phaser.Math.Between(0, 15) * 64) + 32,
                             0
                         );
                     }
@@ -150,7 +160,7 @@ class SceneMain extends Phaser.Scene {
                 else {
                     enemy = new CarrierShip(
                         this,
-                        Phaser.Math.Between(0, this.game.config.width),
+                        (Phaser.Math.Between(0, 15) * 64) + 32,
                         0
                     );
                 }
@@ -164,7 +174,7 @@ class SceneMain extends Phaser.Scene {
             loop: true
         });
 
-        // player-enemies collision
+        // player-enemy collision
         this.physics.add.overlap(this.player, this.enemies, function(player, enemy) {
             if (!player.getData('isDead') &&
                 !enemy.getData('isDead')) {
@@ -176,8 +186,8 @@ class SceneMain extends Phaser.Scene {
             }
         });
 
-        // playerLaser-enemies collision
-        this.physics.add.collider(this.playerLasers, this.enemies, function(playerLaser, enemy) {
+        // playerLaser-enemy collision
+        this.physics.add.overlap(this.playerLasers, this.enemies, function(playerLaser, enemy) {
             if (enemy) {
                 if (enemy.onDestroy !== undefined) {
                     enemy.onDestroy();
@@ -189,7 +199,7 @@ class SceneMain extends Phaser.Scene {
             }
         });
 
-        // player-enemyLasers collision
+        // player-laser collision
         this.physics.add.overlap(this.player, this.enemyLasers, function(player, laser) {
             if (!player.getData('isDead') &&
                 !laser.getData('isDead')) {
@@ -200,6 +210,53 @@ class SceneMain extends Phaser.Scene {
                     scoreText.setText('Score: ' + score);
             }
         });
+
+        // turret-enemy collision
+        this.physics.add.overlap(this.turrets, this.enemies, function(turret, enemy) {
+            if (enemy) {
+                if (enemy.onDestroy !== undefined) {
+                    enemy.onDestroy();
+                }
+                enemy.explode(true);
+                turret.destroy();
+            }
+        });
+
+        // enemyLaser-turret collision
+        this.physics.add.overlap(this.enemyLasers, this.turrets, function(enemyLaser, turret) {
+            if (turret) {
+                if (turret.onDestroy !== undefined) {
+                    turret.onDestroy();
+                }
+                turret.explode(true);
+                enemyLaser.destroy();
+            }
+        });
+
+        // enemy-tower collision
+        this.physics.add.overlap(this.enemies, this.towers, function(enemy, tower) {
+            if (enemy) {
+                if (enemy.onDestroy !== undefined) {
+                    enemy.onDestroy();
+                }
+                enemy.explode(true);
+                tower.destroy();
+            }
+        });
+
+        // tower-enemyLaser collision
+        this.physics.add.overlap(this.enemyLasers, this.towers, function(enemyLaser, tower) {
+            if (tower) {
+                if (tower.onDestroy !== undefined) {
+                    tower.onDestroy();
+                }
+                tower.explode(true);
+                enemyLaser.destroy();
+            }
+        });
+
+        this.axis = 0;
+        this.axisIncrease = 0;
     }
 
     getEnemiesByType(type) {
@@ -213,7 +270,7 @@ class SceneMain extends Phaser.Scene {
         return arr;
     }
 
-    drawLines(graphics) {
+    drawLines() {
         // top/enemy row
         var graphics = this.add.graphics();
         graphics.lineStyle(1, 0x85180f, 0.8);
@@ -296,6 +353,12 @@ class SceneMain extends Phaser.Scene {
                 this.player.setData('timerShootTick', this.player.getData('timerShootDelay') - 1);
                 this.player.setData('isShooting', false);
             }
+        }
+
+        for (var i = 0; i < this.turrets.getChildren().length; i++) {
+            var turret1 = this.turrets.getChildren()[i];
+            turret1.setData('isShooting', true);                    
+            turret1.update();
         }
 
         for (var i = 0; i < this.enemies.getChildren().length; i++) {
