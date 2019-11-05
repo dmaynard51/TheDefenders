@@ -1,18 +1,6 @@
-var score = 0, scoreText;
-
-var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
-           [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]];
-
-class SceneMain extends Phaser.Scene {
+class SceneLevel3 extends Phaser.Scene {
     constructor() {
-        super({ key: 'SceneMain' });
+        super({ key: 'SceneLevel3' });
     }
   
     preload() {
@@ -84,6 +72,15 @@ class SceneMain extends Phaser.Scene {
             ],
             laser: this.sound.add('sndLaser')
         };
+
+        // level text
+        lvlText = this.add.text(this.game.config.width * 0.07, this.game.config.height * 0.05, 'Level 3', {
+            fontFamily: 'monospace',
+            fontSize: 24,
+            color: '#ffffff',
+            align: 'left'
+        });
+        lvlText.setOrigin(0.5);
 
         // score text
         scoreText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Score: 0', {
@@ -412,6 +409,11 @@ class SceneMain extends Phaser.Scene {
         // scrolling background
         for (var i = 0; i < this.backgrounds.length; i++) {
             this.backgrounds[i].update();
+        }
+
+        // advance to next level
+        if (score >= 150) {
+            this.scene.start('SceneVictory');
         }
     }
 }

@@ -7,7 +7,10 @@ var config = {
     },
     scene: [
         SceneMainMenu,
-        SceneMain,
+        SceneLevel1,
+        SceneLevel2,
+        SceneLevel3,
+        SceneVictory,
         SceneGameOver
     ],
     pixelArt: true,
