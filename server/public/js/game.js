@@ -8,7 +8,9 @@ var config = {
     scene: [
         SceneMainMenu,
         SceneLevel1,
+        level1Trans,
         SceneLevel2,
+        level2Trans,
         SceneLevel3,
         SceneVictory,
         SceneGameOver

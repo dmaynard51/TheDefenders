@@ -413,7 +413,7 @@ class SceneLevel2 extends Phaser.Scene {
 
         // advance to next level
         if (score >= 100) {
-            this.scene.start('SceneLevel3');
+            this.scene.start('level2Trans');
         }
     }
 }

@@ -41,9 +41,9 @@ class SceneLevel1 extends Phaser.Scene {
         );
 
         // sfx
-        this.load.audio('sndExplode0', 'assets/P3SpaceShooterContent/sndExplode0.wav');
-        this.load.audio('sndExplode1', 'assets/P3SpaceShooterContent/sndExplode1.wav');
-        this.load.audio('sndLaser', 'assets/P3SpaceShooterContent/sndLaser.wav');
+        this.load.audio('sndExplode0', 'assets/ourStuff/ourSounds/boom9.wav');
+        this.load.audio('sndExplode1', 'assets/ourStuff/ourSounds/explode1.wav');
+        this.load.audio('sndLaser', 'assets/ourStuff/ourSounds/laser1.wav');
     }
 
     create() {
@@ -426,9 +426,13 @@ class SceneLevel1 extends Phaser.Scene {
             this.backgrounds[i].update();
         }
 
+
+
+
+
         // advance to next level
         if (score >= 50) {
-            this.scene.start('SceneLevel2');
+            this.scene.start('level1Trans');
         }
     }
 }

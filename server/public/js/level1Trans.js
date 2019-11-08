@@ -1,6 +1,6 @@
-class SceneMainMenu extends Phaser.Scene {
+class level1Trans extends Phaser.Scene {
     constructor() {
-        super({ key: 'SceneMainMenu' });
+        super({ key: 'level1Trans' });
     }
 
     preload() {
@@ -55,11 +55,11 @@ class SceneMainMenu extends Phaser.Scene {
         // button texture when released
         this.btnPlay.on('pointerup', function() {
             this.btnPlay.setTexture('sprBtnPlay');
-            this.scene.start('SceneLevel1');
+            this.scene.start('SceneLevel2');
         }, this);
 
         // title text
-        this.title = this.add.text(this.game.config.width * 0.5, 128, 'THE DEFENDERS', {
+        this.title = this.add.text(this.game.config.width * 0.5, 128, 'You made it to level 2!', {
             fontFamily: 'monospace',
             fontSize: 48,
             fontStyle: 'bold',
