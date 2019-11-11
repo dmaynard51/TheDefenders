@@ -502,7 +502,7 @@ class SceneLevel2 extends Phaser.Scene {
 
         // advance to next level
         if (energy >= 100) {
-            this.scene.start('SceneLevel3');
+            this.scene.start('level2Trans');
         }
     }
 }
