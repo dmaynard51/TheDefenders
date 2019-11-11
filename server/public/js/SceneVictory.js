@@ -14,14 +14,14 @@ class SceneVictory extends Phaser.Scene {
         });
         this.title.setOrigin(0.5);
 
-        scoreText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Score: ' + score, {
+        energyText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Energy: ' + energy, {
             fontFamily: 'monospace',
             fontSize: 24,
             //fontStyle: 'bold',
             color: '#ffffff',
             align: 'right'
         });
-        scoreText.setOrigin(0.5);
+        energyText.setOrigin(0.5);
 
         // sfx
         this.sfx = {

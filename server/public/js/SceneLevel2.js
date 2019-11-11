@@ -82,14 +82,14 @@ class SceneLevel2 extends Phaser.Scene {
         });
         lvlText.setOrigin(0.5);
 
-        // score text
-        scoreText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Score: ' + score, {
+        // energy text
+        energyText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Energy: ' + energy, {
             fontFamily: 'monospace',
             fontSize: 24,
             color: '#ffffff',
             align: 'right'
         });
-        scoreText.setOrigin(0.5);
+        energyText.setOrigin(0.5);
 
         // scrolling background
         this.backgrounds = [];
@@ -178,8 +178,8 @@ class SceneLevel2 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     enemy.explode(true);
-                    score += 10;
-                    scoreText.setText('Score: ' + score);
+                    energy += 10;
+                    energyText.setText('Energy: ' + energy);
             }
         });
 
@@ -191,8 +191,8 @@ class SceneLevel2 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 playerLaser.destroy();
-                score += 10;
-                scoreText.setText('Score: ' + score);
+                energy += 10;
+                energyText.setText('Energy: ' + energy);
             }
         });
 
@@ -203,8 +203,8 @@ class SceneLevel2 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     laser.destroy();
-                    score += 10;
-                    scoreText.setText('Score: ' + score);
+                    energy += 10;
+                    energyText.setText('Energy: ' + energy);
             }
         });
 
@@ -273,10 +273,6 @@ class SceneLevel2 extends Phaser.Scene {
         graphics.lineStyle(1, 0x85180f, 0.8);
         graphics.moveTo(0, 64);
         graphics.lineTo(this.game.config.width, 64);
-        /*for (var i = 0; i < (this.game.config.width / 64); i++) {
-            graphics.moveTo(i * 64, 0);
-            graphics.lineTo(i * 64, 64);
-        }*/
         graphics.strokePath();
 
         // player row
@@ -412,7 +408,7 @@ class SceneLevel2 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (score >= 100) {
+        if (energy >= 100) {
             this.scene.start('SceneLevel3');
         }
     }

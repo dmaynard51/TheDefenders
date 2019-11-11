@@ -1,12 +1,15 @@
-var score, scoreText, lvlText;
+var energy;
+var energyText;
+var lvlText;
+var subLvlText;
 
 var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+           [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
            [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
            [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]];
 
@@ -47,12 +50,6 @@ class SceneLevel1 extends Phaser.Scene {
     }
 
     create() {
-        // reset score
-        score = 0;
-
-        // draw grid lines
-        this.drawLines();
-
         // animations
         this.anims.create({
             key: 'sprPlayer',
@@ -88,30 +85,41 @@ class SceneLevel1 extends Phaser.Scene {
             laser: this.sound.add('sndLaser')
         };
 
-        // level text
-        lvlText = this.add.text(this.game.config.width * 0.07, this.game.config.height * 0.05, 'Level 1', {
-            fontFamily: 'monospace',
-            fontSize: 24,
-            color: '#ffffff',
-            align: 'left'
-        });
-        lvlText.setOrigin(0.5);
-
-        // score text
-        scoreText = this.add.text(this.game.config.width * 0.9, this.game.config.height * 0.05, 'Score: 0', {
-            fontFamily: 'monospace',
-            fontSize: 24,
-            color: '#ffffff',
-            align: 'right'
-        });
-        scoreText.setOrigin(0.5);
-
         // scrolling background
         this.backgrounds = [];
         for (var i = 0; i < 3; i++) {
             var bg = new ScrollingBackground(this, 'sprBg0', i * 10);
             this.backgrounds.push(bg);
         }
+        this.drawLines();  // draw grid lines
+
+        // level text
+        lvlText = this.add.text(this.game.config.width - 64, 32, 'Level 1', {
+            fontFamily: 'monospace',
+            fontSize: 24,
+            color: '#ffffff',
+            align: 'center'
+        });
+        lvlText.setOrigin(0.5);
+
+        // sub level text
+        subLvlText = this.add.text(this.game.config.width - 64, 48, '\"Homeworld\"', {
+            fontFamily: 'monospace',
+            fontSize: 12,
+            color: '#ffffff',
+            align: 'center'
+        });
+        subLvlText.setOrigin(0.5);
+
+        // energy text
+        energy = 0;  // reset energy
+        energyText = this.add.text(this.game.config.width - 64, 96, 'Energy: ' + energy, {
+            fontFamily: 'monospace',
+            fontSize: 16,
+            color: '#ffffff',
+            align: 'right'
+        });
+        energyText.setOrigin(0.5); 
 
         // create player instance
         this.player = new Player(
@@ -128,19 +136,67 @@ class SceneLevel1 extends Phaser.Scene {
         // player fire w/ spacbar
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        // create turrets
-        this.turrets = this.add.group({ classType: Turret});
-
-        // place turret on click
-        this.input.on('pointerdown', this.placeTurret);
-
         // towers
         this.towers = this.add.group({
             classType: Tower,
             key: 'sprEnemy1',
-            repeat: 15,
+            repeat: 13,
             setXY: { x: 32, y: this.game.config.height - 32, stepX: 64 }
         });
+
+        this.turrets = this.add.group({ classType: Turret});  // create turrets
+        this.input.on('pointerdown', this.placeTurret);  // place turret on click
+
+        // upgrade text
+        this.upgradeText = this.add.text(this.game.config.width - 64, this.game.config.height - 32, 'Upgrade\nMenu', {
+            fontFamily: 'monospace',
+            fontSize: 12,
+            color: '#ffffff',
+            align: 'center'
+        });
+        this.upgradeText.setOrigin(0.5);
+
+        // upgrade turret
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'sprEnemy1');
+        this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
+        this.upgradeTurretButton.setScale(3);
+
+        // upgrade turret text
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 1', {
+            fontFamily: 'monospace',
+            fontSize: 10,
+            color: '#ffffff',
+            align: 'center'
+        });
+        this.upgradeTurretText.setOrigin(0.5);
+
+        // upgrade towers
+        this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'sprEnemy1');
+        this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
+        this.upgradeTowersButton.setScale(3);
+
+        // upgrade towers text
+        this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
+            fontFamily: 'monospace',
+            fontSize: 10,
+            color: '#ffffff',
+            align: 'center'
+        });
+        this.upgradeTowersText.setOrigin(0.5);
+
+        // upgrade ship laser
+        this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer');
+        this.upgradeShipButton.setInteractive().on('pointerdown', this.upgradeShip);
+        this.upgradeShipButton.setScale(2);
+
+        // upgrade ship text
+        this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 80, 'Ship\nLevel 1', {
+            fontFamily: 'monospace',
+            fontSize: 10,
+            color: '#ffffff',
+            align: 'center'
+        });
+        this.upgradeShipText.setOrigin(0.5);
 
         // create enemy instance groups
         this.enemies = this.add.group();
@@ -156,7 +212,7 @@ class SceneLevel1 extends Phaser.Scene {
                 if (Phaser.Math.Between(0, 10) >= 3) {
                     enemy = new GunShip(
                         this,
-                        (Phaser.Math.Between(0, 15) * 64) + 32,
+                        (Phaser.Math.Between(0, 13) * 64) + 32,
                         0   
                     );
                 }
@@ -164,7 +220,7 @@ class SceneLevel1 extends Phaser.Scene {
                     if (this.getEnemiesByType('ChaserShip').length < 5) {
                         enemy = new ChaserShip(
                             this,
-                            (Phaser.Math.Between(0, 15) * 64) + 32,
+                            (Phaser.Math.Between(0, 13) * 64) + 32,
                             0
                         );
                     }
@@ -172,13 +228,13 @@ class SceneLevel1 extends Phaser.Scene {
                 else {
                     enemy = new CarrierShip(
                         this,
-                        (Phaser.Math.Between(0, 15) * 64) + 32,
+                        (Phaser.Math.Between(0, 13) * 64) + 32,
                         0
                     );
                 }
     
                 if (enemy !== null) {
-                    enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
+                    enemy.setScale(1.5);
                     this.enemies.add(enemy);
                 }
             },
@@ -193,8 +249,8 @@ class SceneLevel1 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     enemy.explode(true);
-                    score += 10;
-                    scoreText.setText('Score: ' + score);
+                    energy += 10;
+                    energyText.setText('Energy: ' + energy);
             }
         });
 
@@ -206,8 +262,8 @@ class SceneLevel1 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 playerLaser.destroy();
-                score += 10;
-                scoreText.setText('Score: ' + score);
+                energy += 10;
+                energyText.setText('Energy: ' + energy);
             }
         });
 
@@ -218,8 +274,8 @@ class SceneLevel1 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     laser.destroy();
-                    score += 10;
-                    scoreText.setText('Score: ' + score);
+                    energy += 10;
+                    energyText.setText('Energy: ' + energy);
             }
         });
 
@@ -287,26 +343,22 @@ class SceneLevel1 extends Phaser.Scene {
         var graphics = this.add.graphics();
         graphics.lineStyle(1, 0x85180f, 0.8);
         graphics.moveTo(0, 64);
-        graphics.lineTo(this.game.config.width, 64);
-        /*for (var i = 0; i < (this.game.config.width / 64); i++) {
-            graphics.moveTo(i * 64, 0);
-            graphics.lineTo(i * 64, 64);
-        }*/
+        graphics.lineTo(this.game.config.width - 128, 64);
         graphics.strokePath();
 
         // player row
         graphics = this.add.graphics();
         graphics.lineStyle(1, 0x004a05, 0.8);
         graphics.moveTo(0, this.game.config.height - 128);
-        graphics.lineTo(this.game.config.width, this.game.config.height - 128);
+        graphics.lineTo(this.game.config.width - 128, this.game.config.height - 128);
         graphics.strokePath();
 
         // bottom row
         graphics = this.add.graphics();
         graphics.lineStyle(1, 0x000987, 0.8);
         graphics.moveTo(0, this.game.config.height - 64);
-        graphics.lineTo(this.game.config.width, this.game.config.height - 64);
-        for (var i = 0; i < (this.game.config.width / 64); i++) {
+        graphics.lineTo(this.game.config.width - 128, this.game.config.height - 64);
+        for (var i = 0; i < (this.game.config.width / 64) - 1; i++) {
             graphics.moveTo(i * 64, this.game.config.height);
             graphics.lineTo(i * 64, this.game.config.height - 64);
         }
@@ -317,14 +369,52 @@ class SceneLevel1 extends Phaser.Scene {
         graphics.lineStyle(1, 0x333333, 0.8);
         for (var i = 3; i < (this.game.config.height / 64) - 1; i++) {
             graphics.moveTo(0, this.game.config.height - (i * 64));
-            graphics.lineTo(this.game.config.width, this.game.config.height - (i * 64));
+            graphics.lineTo(this.game.config.width - 128, this.game.config.height - (i * 64));
         }
         // vertical lines
-        for (var i = 1; i < (this.game.config.width / 64); i++) {
+        for (var i = 1; i < (this.game.config.width / 64) - 1; i++) {
             graphics.moveTo(i * 64, this.game.config.height - 128);
             graphics.lineTo(i * 64, 64);
         }
         graphics.strokePath();
+
+        // side menu line
+        graphics = this.add.graphics();
+        graphics.lineStyle(1, 0x82007e, 0.8);
+        graphics.moveTo(this.game.config.width - 128, this.game.config.height);
+        graphics.lineTo(this.game.config.width - 128, 0);
+        graphics.moveTo(this.game.config.width - 128, 64);
+        graphics.lineTo(this.game.config.width, 64);
+        graphics.moveTo(this.game.config.width - 128, 128);
+        graphics.lineTo(this.game.config.width, 128);
+        graphics.moveTo(this.game.config.width - 128, 256);
+        graphics.lineTo(this.game.config.width, 256);
+        graphics.moveTo(this.game.config.width - 128, this.game.config.height - 192);
+        graphics.lineTo(this.game.config.width, this.game.config.height - 192);
+        graphics.moveTo(this.game.config.width - 128, this.game.config.height - 64);
+        graphics.lineTo(this.game.config.width, this.game.config.height - 64);
+        graphics.strokePath();
+    }
+
+    upgradeTurret = () => {
+        if (energy >= 10) {
+            energy -= 10;
+            energyText.setText('Energy: ' + energy);
+        }
+    }
+
+    upgradeTowers = () => {
+        if (energy >= 10) {
+            energy -= 10;
+            energyText.setText('Energy: ' + energy);
+        }
+    }
+
+    upgradeShip = () => {
+        if (energy >= 10) {
+            energy -= 10;
+            energyText.setText('Energy: ' + energy);
+        }
     }
 
     placeTurret = (pointer) => {
@@ -427,7 +517,7 @@ class SceneLevel1 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (score >= 50) {
+        if (energy >= 50) {
             this.scene.start('SceneLevel2');
         }
     }
