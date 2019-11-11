@@ -1,5 +1,10 @@
 var config = {
     type: Phaser.AUTO,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'THE DEFENDERS',
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     width: 1024,
     height: 576,
     physics: {
