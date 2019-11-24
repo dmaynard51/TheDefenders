@@ -145,9 +145,9 @@ class ChaserShip extends Entity {
 }
 
 class GunShip extends Entity {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'sprEnemy0', 'GunShip');
-        this.play('sprEnemy0');
+    constructor(scene, x, y, key) {
+        super(scene, x, y, key, 'GunShip');
+        //this.play(key);
 
         this.body.velocity.y = Phaser.Math.Between(50, 100);
 
@@ -185,9 +185,126 @@ class CarrierShip extends Entity {
     }
 }
 
-class Turret extends Entity {
+
+class Turret1 extends Entity {
     constructor(scene, x, y) {
-        super(scene, x, y, 'sprEnemy1', 'turret');
+        super(scene, x, y, 'probe1', 'Turret');
+
+        this.setData('isShooting', false);
+        this.setData('timerShootDelay', 10);
+        this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
+    }
+
+    place(i, j) {
+        this.y = i * 64 + 64/2;
+        this.x = j * 64 + 64/2;
+        map[i][j] = 1;
+    }
+
+    onDestroy() {
+        this.setData('isShooting', false);
+    }    
+    
+    update() {
+        this.body.setVelocity(0, 0);
+
+        this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
+
+        if (this.getData('isShooting')) {
+            if (this.getData('timerShootTick') < this.getData('timerShootDelay')) {
+                this.setData('timerShootTick', this.getData('timerShootTick') + 1);
+            }
+            else {
+                var rotateleft = -30;
+                var rotateright = 30;
+                var laser = new PlayerLaser(this.scene, this.x, this.y);
+                this.scene.playerLasers.add(laser);
+                
+                if (this.scene.axis ==0) {
+                    this.scene.axisIncrease += 10;
+                    
+                    if (this.scene.axisIncrease == 30) {
+                        this.scene.axis = 1;
+                    }
+                }
+                else {
+                    this.scene.axisIncrease -= 10;
+                    
+                    if (this.scene.axisIncrease == -30) {
+                        this.scene.axis = 0;
+                    }
+                } 
+
+                laser.body.velocity.x = this.scene.axisIncrease;
+                this.scene.sfx.laser.play();
+                this.setData('timerShootTick', 0);
+            }
+        }
+    }
+}
+
+
+class Turret2 extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'probe2', 'Turret');
+
+        this.setData('isShooting', false);
+        this.setData('timerShootDelay', 10);
+        this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
+    }
+
+    place(i, j) {
+        this.y = i * 64 + 64/2;
+        this.x = j * 64 + 64/2;
+        map[i][j] = 1;
+    }
+
+    onDestroy() {
+        this.setData('isShooting', false);
+    }    
+    
+    update() {
+        this.body.setVelocity(0, 0);
+
+        this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
+
+        if (this.getData('isShooting')) {
+            if (this.getData('timerShootTick') < this.getData('timerShootDelay')) {
+                this.setData('timerShootTick', this.getData('timerShootTick') + 1);
+            }
+            else {
+                var rotateleft = -30;
+                var rotateright = 30;
+                var laser = new PlayerLaser(this.scene, this.x, this.y);
+                this.scene.playerLasers.add(laser);
+                
+                if (this.scene.axis ==0) {
+                    this.scene.axisIncrease += 10;
+                    
+                    if (this.scene.axisIncrease == 30) {
+                        this.scene.axis = 1;
+                    }
+                }
+                else {
+                    this.scene.axisIncrease -= 10;
+                    
+                    if (this.scene.axisIncrease == -30) {
+                        this.scene.axis = 0;
+                    }
+                } 
+
+                laser.body.velocity.x = this.scene.axisIncrease;
+                this.scene.sfx.laser.play();
+                this.setData('timerShootTick', 0);
+            }
+        }
+    }
+}
+
+
+class Turret3 extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'probe3', 'Turret');
 
         this.setData('isShooting', false);
         this.setData('timerShootDelay', 10);
@@ -243,43 +360,7 @@ class Turret extends Entity {
 }
 
 class Tower extends Entity {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'sprEnemy1', 'Tower');
-    }
-}
-
-class ScrollingBackground {
-    constructor(scene, key, velocityY) {
-        this.scene = scene;
-        this.key = key;
-        this.velocityY = velocityY;
-        this.layers = this.scene.add.group();
-        this.createLayers();
-    }
-
-    createLayers() {
-        for (var i = 0; i < 2; i++) {
-            // creating two backgrounds will allow a continuous flow giving the illusion that they are moving.
-            var layer = this.scene.add.sprite(0, 0, this.key);
-            layer.y = (layer.displayHeight * i);
-            var flipX = Phaser.Math.Between(0, 10) >= 5 ? -1 : 1;
-            var flipY = Phaser.Math.Between(0, 10) >= 5 ? -1 : 1;
-            layer.setScale(flipX * 5, flipY * 2);
-            layer.setDepth(-5 - (i - 1));
-            this.scene.physics.world.enableBody(layer, 0);
-            layer.body.velocity.y = this.velocityY;
-
-            this.layers.add(layer);
-        }
-    }
-
-    update() {
-        //
-        if (this.layers.getChildren()[0].y > 0) {
-            for (var i = 0; i < this.layers.getChildren().length; i++) {
-                var layer = this.layers.getChildren()[i];
-                layer.y = (-layer.displayHeight) + (layer.displayHeight * i);
-            }
-        }
+    constructor(scene, x, y, key) {
+        super(scene, x, y, key, 'Tower');
     }
 }

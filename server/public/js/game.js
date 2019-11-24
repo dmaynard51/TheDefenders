@@ -20,7 +20,7 @@ var config = {
         SceneVictory,
         SceneGameOver
     ],
-    pixelArt: true,
+    pixelArt: false,
     roundPixels: true
 };
 

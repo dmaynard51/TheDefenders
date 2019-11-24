@@ -60,21 +60,5 @@ class SceneGameOver extends Phaser.Scene {
             this.btnRestart.setTexture('sprBtnRestart');
             this.scene.start('SceneLevel1');
         }, this);
-
-        // scrolling background
-        this.backgrounds = [];
-        for (var i = 0; i < 3; i++) {
-            var keys = ['sprBg0', 'sprBg1'];
-            var key = keys[Phaser.Math.Between(0, keys.length - 1)];
-            var bg = new ScrollingBackground(this, key, i * 10);
-            this.backgrounds.push(bg);
-        }
-    }
-
-    update() {
-        // scrolling background
-        for (var i = 0; i < this.backgrounds.length; i++) {
-            this.backgrounds[i].update();
-        }
     }
 }

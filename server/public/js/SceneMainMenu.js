@@ -5,8 +5,7 @@ class SceneMainMenu extends Phaser.Scene {
 
     preload() {
         // images
-        this.load.image('sprBg0', 'assets/P3SpaceShooterContent/sprBg0.png');
-        this.load.image('sprBg1', 'assets/P3SpaceShooterContent/sprBg1.png');
+        this.load.image('sprBg0', 'assets/ourStuff/ourBackgrounds/HomeLevel.png');
         this.load.image('sprBtnPlay', 'assets/P3SpaceShooterContent/sprBtnPlay.png');
         this.load.image('sprBtnPlayHover', 'assets/P3SpaceShooterContent/sprBtnPlayHover.png');
         this.load.image('sprBtnPlayDown', 'assets/P3SpaceShooterContent/sprBtnPlayDown.png');
@@ -20,6 +19,10 @@ class SceneMainMenu extends Phaser.Scene {
     }
 
     create() {
+        //Background
+        this.add.image(512, 288, 'sprBg0');
+
+
         // sfx
         this.sfx = {
             btnOver: this.sound.add('sndBtnOver'),
@@ -67,21 +70,5 @@ class SceneMainMenu extends Phaser.Scene {
             align: 'center'
         });
         this.title.setOrigin(0.5);
-
-        // scrolling background
-        this.backgrounds = [];
-        for (var i = 0; i < 3; i++) {
-            var keys = ['sprBg0', 'sprBg1'];
-            var key = keys[Phaser.Math.Between(0, keys.length - 1)];
-            var bg = new ScrollingBackground(this, key, i * 10);
-            this.backgrounds.push(bg);
-        }
-    }
-
-    update() {
-        // scrolling background
-        for (var i = 0; i < this.backgrounds.length; i++) {
-            this.backgrounds[i].update();
-        }
     }
 }

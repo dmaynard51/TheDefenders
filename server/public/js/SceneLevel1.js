@@ -13,6 +13,7 @@ var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
            [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
            [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]];
 
+
 class SceneLevel1 extends Phaser.Scene {
     constructor() {
         super({ key: 'SceneLevel1' });
@@ -20,6 +21,9 @@ class SceneLevel1 extends Phaser.Scene {
   
     preload() {
         // images
+        this.load.image('planet', 'assets/ourStuff/ourBackgrounds/planetSmall.png');
+        this.load.image('probe1', 'assets/ourStuff/ourProbes/probe1.png');
+        this.load.image('tower1', 'assets/ourStuff/ourTowers/tower1.png');
         this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
         this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
         this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
@@ -27,15 +31,15 @@ class SceneLevel1 extends Phaser.Scene {
 
         // spritesheets
         this.load.spritesheet('sprPlayer', 
-            'assets/games/invaders/player.png', 
+            'assets/ourStuff/ourProbes/ourShip2.png', 
             { frameWidth: 28, frameHeight: 21 }
         );
         this.load.spritesheet('sprEnemy0', 
-            'assets/P3SpaceShooterContent/sprEnemy0.png', 
+            'assets/ourStuff/ourEnemies/blueEnemySpr.png', 
             { frameWidth: 16, frameHeight: 16 }
         );
         this.load.spritesheet('sprEnemy2', 
-            'assets/P3SpaceShooterContent/sprEnemy2.png', 
+            'assets/ourStuff/ourEnemies/blueEnemy2Spr.png', 
             { frameWidth: 16, frameHeight: 16 }
         );
         this.load.spritesheet('sprExplosion', 
@@ -50,6 +54,12 @@ class SceneLevel1 extends Phaser.Scene {
     }
 
     create() {
+        //Background
+        this.add.image(512, 288, 'sprBg0');
+        this.add.image(512, 527,'planet');
+
+
+
         // animations
         this.anims.create({
             key: 'sprPlayer',
@@ -85,12 +95,7 @@ class SceneLevel1 extends Phaser.Scene {
             laser: this.sound.add('sndLaser')
         };
 
-        // scrolling background
-        this.backgrounds = [];
-        for (var i = 0; i < 3; i++) {
-            var bg = new ScrollingBackground(this, 'sprBg0', i * 10);
-            this.backgrounds.push(bg);
-        }
+
         this.drawLines();  // draw grid lines
 
         // level text
@@ -139,12 +144,12 @@ class SceneLevel1 extends Phaser.Scene {
         // towers
         this.towers = this.add.group({
             classType: Tower,
-            key: 'sprEnemy1',
+            key: 'tower1',
             repeat: 13,
             setXY: { x: 32, y: this.game.config.height - 32, stepX: 64 }
         });
 
-        this.turrets = this.add.group({ classType: Turret});  // create turrets
+        this.turrets = this.add.group({ classType: Turret1});  // create turrets
         this.input.on('pointerdown', this.placeTurret);  // place turret on click
 
         // upgrade text
@@ -157,9 +162,9 @@ class SceneLevel1 extends Phaser.Scene {
         this.upgradeText.setOrigin(0.5);
 
         // upgrade turret
-        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'sprEnemy1');
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'probe1');
         this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
-        this.upgradeTurretButton.setScale(3);
+        this.upgradeTurretButton.setScale(1);
 
         // upgrade turret text
         this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 1', {
@@ -171,9 +176,9 @@ class SceneLevel1 extends Phaser.Scene {
         this.upgradeTurretText.setOrigin(0.5);
 
         // upgrade towers
-        this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'sprEnemy1');
+        this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower1');
         this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
-        this.upgradeTowersButton.setScale(3);
+        this.upgradeTowersButton.setScale(1);
 
         // upgrade towers text
         this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
@@ -187,7 +192,7 @@ class SceneLevel1 extends Phaser.Scene {
         // upgrade ship laser
         this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer');
         this.upgradeShipButton.setInteractive().on('pointerdown', this.upgradeShip);
-        this.upgradeShipButton.setScale(2);
+        this.upgradeShipButton.setScale(1);
 
         // upgrade ship text
         this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 80, 'Ship\nLevel 1', {
@@ -203,6 +208,11 @@ class SceneLevel1 extends Phaser.Scene {
         this.enemyLasers = this.add.group();
         this.playerLasers = this.add.group();
 
+
+
+        
+
+
         // spawn enemies timer event
         this.time.addEvent({
             delay: 1500,
@@ -213,7 +223,8 @@ class SceneLevel1 extends Phaser.Scene {
                     enemy = new GunShip(
                         this,
                         (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0   
+                        0,
+                        'sprEnemy0'   
                     );
                 }
                 else if (Phaser.Math.Between(0, 10) >= 5) {
@@ -241,6 +252,7 @@ class SceneLevel1 extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
 
         // player-enemy collision
         this.physics.add.overlap(this.player, this.enemies, function(player, enemy) {
@@ -400,6 +412,7 @@ class SceneLevel1 extends Phaser.Scene {
         if (energy >= 10) {
             energy -= 10;
             energyText.setText('Energy: ' + energy);
+            this.turrets.setData('timerShootDelay', 1)
         }
     }
 
@@ -511,15 +524,7 @@ class SceneLevel1 extends Phaser.Scene {
             }
         }
 
-        // scrolling background
-        for (var i = 0; i < this.backgrounds.length; i++) {
-            this.backgrounds[i].update();
-        }
-
-
-
-
-
+        
         // advance to next level
         if (energy >= 50) {
             this.scene.start('level1Trans');

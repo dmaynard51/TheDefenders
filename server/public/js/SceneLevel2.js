@@ -5,24 +5,28 @@ class SceneLevel2 extends Phaser.Scene {
   
     preload() {
         // images
+        this.load.image('probe2', 'assets/ourStuff/ourProbes/ourShip.png');
+        this.load.image('tower2', 'assets/ourStuff/ourTowers/towerL2.png');
+        this.load.image('bgL2', 'assets/ourStuff/ourBackgrounds/Level2bg.png');
         this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
         this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
         this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
         this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
 
         // spritesheets
-        this.load.spritesheet('sprPlayer', 
-            'assets/games/invaders/player.png', 
+        this.load.spritesheet('sprPlayer2', 
+            'assets/ourStuff/ourProbes/Level2ship.png', 
             { frameWidth: 28, frameHeight: 21 }
         );
-        this.load.spritesheet('sprEnemy0', 
-            'assets/P3SpaceShooterContent/sprEnemy0.png', 
+        this.load.spritesheet('sprEnemyRed', 
+            'assets/ourStuff/ourEnemies/redEnemySpr.png', 
             { frameWidth: 16, frameHeight: 16 }
         );
         this.load.spritesheet('sprEnemy2', 
-            'assets/P3SpaceShooterContent/sprEnemy2.png', 
+            'assets/ourStuff/ourEnemies/blueEnemy2Spr.png', 
             { frameWidth: 16, frameHeight: 16 }
         );
+        
         this.load.spritesheet('sprExplosion', 
             'assets/P3SpaceShooterContent/sprExplosion.png', 
             { frameWidth: 32, frameHeight: 32 }
@@ -35,10 +39,14 @@ class SceneLevel2 extends Phaser.Scene {
     }
 
     create() {
+        //Background
+        this.add.image(512, 288, 'bgL2');
+
+
         // animations
         this.anims.create({
-            key: 'sprPlayer',
-            frames: this.anims.generateFrameNumbers('sprPlayer'),
+            key: 'sprPlayer2',
+            frames: this.anims.generateFrameNumbers('sprPlayer2'),
             frameRate: 20,
             repeat: -1
         });
@@ -70,12 +78,6 @@ class SceneLevel2 extends Phaser.Scene {
             laser: this.sound.add('sndLaser')
         };
 
-        // scrolling background
-        this.backgrounds = [];
-        for (var i = 0; i < 3; i++) {
-            var bg = new ScrollingBackground(this, 'sprBg0', i * 10);
-            this.backgrounds.push(bg);
-        }
         this.drawLines();  // draw grid lines
 
         // level text
@@ -110,7 +112,7 @@ class SceneLevel2 extends Phaser.Scene {
             this,
             this.game.config.width * 0.5,
             this.game.config.height - 96,
-            'sprPlayer'
+            'sprPlayer2'
         );
 
         // player movement keys
@@ -123,12 +125,12 @@ class SceneLevel2 extends Phaser.Scene {
         // towers
         this.towers = this.add.group({
             classType: Tower,
-            key: 'sprEnemy1',
+            key: 'tower2',
             repeat: 13,
             setXY: { x: 32, y: this.game.config.height - 32, stepX: 64 }
         });
 
-        this.turrets = this.add.group({ classType: Turret});  // create turrets
+        this.turrets = this.add.group({ classType: Turret2});  // create turrets
         this.input.on('pointerdown', this.placeTurret);  // place turret on click
 
         // upgrade text
@@ -141,12 +143,12 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeText.setOrigin(0.5);
 
         // upgrade turret
-        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'sprEnemy1');
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'probe2');
         this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
-        this.upgradeTurretButton.setScale(3);
+        this.upgradeTurretButton.setScale(1);
 
         // upgrade turret text
-        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 1', {
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 2', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -155,12 +157,12 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeTurretText.setOrigin(0.5);
 
         // upgrade towers
-        this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'sprEnemy1');
+        this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower2');
         this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
-        this.upgradeTowersButton.setScale(3);
+        this.upgradeTowersButton.setScale(1);
 
         // upgrade towers text
-        this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
+        this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 2', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -169,12 +171,12 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeTowersText.setOrigin(0.5);
 
         // upgrade ship laser
-        this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer');
+        this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer2');
         this.upgradeShipButton.setInteractive().on('pointerdown', this.upgradeShip);
-        this.upgradeShipButton.setScale(2);
+        this.upgradeShipButton.setScale(1);
 
         // upgrade ship text
-        this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 80, 'Ship\nLevel 1', {
+        this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 80, 'Ship\nLevel 2', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -197,7 +199,8 @@ class SceneLevel2 extends Phaser.Scene {
                     enemy = new GunShip(
                         this,
                         (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0   
+                        0,
+                        'sprEnemyRed'  //New gun ship for level 2
                     );
                 }
                 else if (Phaser.Math.Between(0, 10) >= 5) {
@@ -493,11 +496,6 @@ class SceneLevel2 extends Phaser.Scene {
                     laser.destroy();
                 }
             }
-        }
-
-        // scrolling background
-        for (var i = 0; i < this.backgrounds.length; i++) {
-            this.backgrounds[i].update();
         }
 
         // advance to next level
