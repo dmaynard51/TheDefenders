@@ -15,7 +15,7 @@ class SceneLevel2 extends Phaser.Scene {
 
         // spritesheets
         this.load.spritesheet('sprPlayer2', 
-            'assets/ourStuff/ourProbes/Level2ship.png', 
+            'assets/ourStuff/ourProbes/ourShip2.png', 
             { frameWidth: 28, frameHeight: 21 }
         );
         this.load.spritesheet('sprEnemyRed', 

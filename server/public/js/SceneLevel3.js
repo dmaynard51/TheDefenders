@@ -7,15 +7,15 @@ class SceneLevel3 extends Phaser.Scene {
         // images
         this.load.image('probe3', 'assets/ourStuff/ourProbes/probe2.png');
         this.load.image('tower3', 'assets/ourStuff/ourTowers/towerL3.png');
-        this.load.image('bgL3', 'assets/ourStuff/ourBackgrounds/Level3bg.png');
+        this.load.image('bgL3', 'assets/ourStuff/ourBackgrounds/Level3BG.png');
         this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
         this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
         this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
         this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
 
         // spritesheets
-        this.load.spritesheet('sprPlayer', 
-            'assets/ourStuff/ourProbes/ourShip.png', 
+        this.load.spritesheet('sprPlayer3', 
+            'assets/ourStuff/ourProbes/ourShip2.png', 
             { frameWidth: 28, frameHeight: 21 }
         );
         this.load.image('sprEnemyRed2', 
@@ -44,8 +44,8 @@ class SceneLevel3 extends Phaser.Scene {
 
         // animations
         this.anims.create({
-            key: 'sprPlayer',
-            frames: this.anims.generateFrameNumbers('sprPlayer'),
+            key: 'sprPlayer3',
+            frames: this.anims.generateFrameNumbers('sprPlayer3'),
             frameRate: 20,
             repeat: -1
         });
@@ -112,7 +112,7 @@ class SceneLevel3 extends Phaser.Scene {
             this,
             this.game.config.width * 0.5,
             this.game.config.height - 96,
-            'sprPlayer'
+            'sprPlayer3'
         );
 
         // player movement keys
