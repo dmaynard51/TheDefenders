@@ -194,34 +194,33 @@ class SceneLevel3 extends Phaser.Scene {
             delay: 1500,
             callback: function() {
                 var enemy = null;
-
-                if (Phaser.Math.Between(0, 10) >= 3) {
-                    enemy = new GunShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0,
-                        'sprEnemyRed2'
-                    );
-                }
-                else if (Phaser.Math.Between(0, 10) >= 5) {
-                    if (this.getEnemiesByType('ChaserShip').length < 5) {
-                        enemy = new ChaserShip(
-                            this,
-                            (Phaser.Math.Between(0, 13) * 64) + 32,
-                            0
-                        );
-                    }
-                }
-                else {
-                    enemy = new CarrierShip(
+                
+                if (Phaser.Math.Between(1, 3) == 1) {
+                    enemy = new BasicShip(
                         this,
                         (Phaser.Math.Between(0, 13) * 64) + 32,
                         0
                     );
+                    enemy.setScale(1.5);
+                }
+                else if (Phaser.Math.Between(1, 3) == 2) {
+                    enemy = new SpeederShip(
+                        this,
+                        (Phaser.Math.Between(0, 13) * 64) + 32,
+                        0
+                    );
+                    enemy.setScale(1.5);
+                }
+                else {
+                    enemy = new GunnerShip(
+                        this,
+                        (Phaser.Math.Between(0, 13) * 64) + 32,
+                        0
+                    );
+                    enemy.setScale(1.5);
                 }
     
                 if (enemy !== null) {
-                    enemy.setScale(1.5);
                     this.enemies.add(enemy);
                 }
             },
@@ -501,6 +500,11 @@ class SceneLevel3 extends Phaser.Scene {
         // advance to next level
         if (energy >= 150) {
             this.scene.start('SceneVictory');
+        }
+
+        // lose if all towers destroyed
+        if (towerCount <= 0) {
+            this.scene.start('SceneGameOver');
         }
     }
 }

@@ -129,6 +129,7 @@ class SceneLevel2 extends Phaser.Scene {
             repeat: 13,
             setXY: { x: 32, y: this.game.config.height - 32, stepX: 64 }
         });
+        towerCount = 14;  // set initial tower count
 
         this.turrets = this.add.group({ classType: Turret2});  // create turrets
         this.input.on('pointerdown', this.placeTurret);  // place turret on click
@@ -194,34 +195,33 @@ class SceneLevel2 extends Phaser.Scene {
             delay: 1500,
             callback: function() {
                 var enemy = null;
-
-                if (Phaser.Math.Between(0, 10) >= 3) {
-                    enemy = new GunShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0,
-                        'sprEnemyRed'  //New gun ship for level 2
-                    );
-                }
-                else if (Phaser.Math.Between(0, 10) >= 5) {
-                    if (this.getEnemiesByType('ChaserShip').length < 5) {
-                        enemy = new ChaserShip(
-                            this,
-                            (Phaser.Math.Between(0, 13) * 64) + 32,
-                            0
-                        );
-                    }
-                }
-                else {
-                    enemy = new CarrierShip(
+                
+                if (Phaser.Math.Between(1, 3) == 1) {
+                    enemy = new BasicShip(
                         this,
                         (Phaser.Math.Between(0, 13) * 64) + 32,
                         0
                     );
+                    enemy.setScale(1.5);
+                }
+                else if (Phaser.Math.Between(1, 3) == 2) {
+                    enemy = new SpeederShip(
+                        this,
+                        (Phaser.Math.Between(0, 13) * 64) + 32,
+                        0
+                    );
+                    enemy.setScale(1.5);
+                }
+                else {
+                    enemy = new GunnerShip(
+                        this,
+                        (Phaser.Math.Between(0, 13) * 64) + 32,
+                        0
+                    );
+                    enemy.setScale(1.5);
                 }
     
                 if (enemy !== null) {
-                    enemy.setScale(1.5);
                     this.enemies.add(enemy);
                 }
             },
@@ -501,6 +501,11 @@ class SceneLevel2 extends Phaser.Scene {
         // advance to next level
         if (energy >= 100) {
             this.scene.start('level2Trans');
+        }
+
+        // lose if all towers destroyed
+        if (towerCount <= 0) {
+            this.scene.start('SceneGameOver');
         }
     }
 }

@@ -2,6 +2,7 @@ var energy;
 var energyText;
 var lvlText;
 var subLvlText;
+var towerCount;
 
 var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
@@ -57,8 +58,6 @@ class SceneLevel1 extends Phaser.Scene {
         //Background
         this.add.image(512, 288, 'sprBg0');
         this.add.image(512, 527,'planet');
-
-
 
         // animations
         this.anims.create({
@@ -148,6 +147,7 @@ class SceneLevel1 extends Phaser.Scene {
             repeat: 13,
             setXY: { x: 32, y: this.game.config.height - 32, stepX: 64 }
         });
+        towerCount = 14;  // set initial tower count
 
         this.turrets = this.add.group({ classType: Turret1});  // create turrets
         this.input.on('pointerdown', this.placeTurret);  // place turret on click
@@ -208,44 +208,30 @@ class SceneLevel1 extends Phaser.Scene {
         this.enemyLasers = this.add.group();
         this.playerLasers = this.add.group();
 
-
-
-        
-
-
         // spawn enemies timer event
         this.time.addEvent({
             delay: 1500,
             callback: function() {
                 var enemy = null;
-
-                if (Phaser.Math.Between(0, 10) >= 3) {
-                    enemy = new GunShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0,
-                        'sprEnemy0'   
-                    );
-                }
-                else if (Phaser.Math.Between(0, 10) >= 5) {
-                    if (this.getEnemiesByType('ChaserShip').length < 5) {
-                        enemy = new ChaserShip(
-                            this,
-                            (Phaser.Math.Between(0, 13) * 64) + 32,
-                            0
-                        );
-                    }
-                }
-                else {
-                    enemy = new CarrierShip(
+                
+                if (Phaser.Math.Between(1, 2) == 1) {
+                    enemy = new BasicShip(
                         this,
                         (Phaser.Math.Between(0, 13) * 64) + 32,
                         0
                     );
+                    enemy.setScale(1.5);
+                }
+                else {
+                    enemy = new SpeederShip(
+                        this,
+                        (Phaser.Math.Between(0, 13) * 64) + 32,
+                        0
+                    );
+                    enemy.setScale(1.5);
                 }
     
                 if (enemy !== null) {
-                    enemy.setScale(1.5);
                     this.enemies.add(enemy);
                 }
             },
@@ -524,10 +510,14 @@ class SceneLevel1 extends Phaser.Scene {
             }
         }
 
-        
         // advance to next level
         if (energy >= 50) {
             this.scene.start('level1Trans');
+        }
+
+        // lose if all towers destroyed
+        if (towerCount <= 0) {
+            this.scene.start('SceneGameOver');
         }
     }
 }

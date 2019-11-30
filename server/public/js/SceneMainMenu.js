@@ -22,7 +22,6 @@ class SceneMainMenu extends Phaser.Scene {
         //Background
         this.add.image(512, 288, 'sprBg0');
 
-
         // sfx
         this.sfx = {
             btnOver: this.sound.add('sndBtnOver'),
@@ -63,7 +62,7 @@ class SceneMainMenu extends Phaser.Scene {
 
         // title text
         this.title = this.add.text(this.game.config.width * 0.5, 128, 'THE DEFENDERS', {
-            fontFamily: 'monospace',
+            fontFamily: 'defenders',
             fontSize: 48,
             fontStyle: 'bold',
             color: '#ffffff',
