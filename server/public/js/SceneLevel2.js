@@ -1,3 +1,5 @@
+var energy = 50;
+
 class SceneLevel2 extends Phaser.Scene {
     constructor() {
         super({ key: 'SceneLevel2' });
@@ -388,37 +390,48 @@ class SceneLevel2 extends Phaser.Scene {
 
     upgradeTurret = () => {
         if (energy >= 10) {
-            energy -= 10;
-            energyText.setText('Energy: ' + energy);
+            //energy -= 10;
+            //energyText.setText('Energy: ' + energy);
+            this.turrets.setData('timerShootDelay', 1)
         }
     }
 
     upgradeTowers = () => {
         if (energy >= 10) {
-            energy -= 10;
-            energyText.setText('Energy: ' + energy);
+            //energy -= 10;
+            //energyText.setText('Energy: ' + energy);
         }
     }
 
     upgradeShip = () => {
         if (energy >= 10) {
             energy -= 10;
-            energyText.setText('Energy: ' + energy);
+            energyText.setText('Energy: ' + energy);            
+            //energyText.setText('Energy: ' + energy);
+            console.log(energy);
             this.turretType = 1;   
 
         }
+                
     }
 
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
-        if (this.canPlaceTurret(i, j)) {
-            var turret = this.turrets.get();
-            if (turret) {
-                turret.setActive(true);
-                turret.setVisible(true);
-                turret.place(i, j);
-            }   
+        if (energy > 20)
+        {
+            if (this.canPlaceTurret(i, j)) {
+                var turret = this.turrets.get();
+                if (turret) {
+                    turret.setActive(true);
+                    turret.setVisible(true);
+                    turret.place(i, j);
+            energy -= 20;
+            energyText.setText('Energy: ' + energy);                        
+                }   
+            }
+          
+          
         }
     }
 

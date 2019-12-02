@@ -434,10 +434,11 @@ class SceneLevel1 extends Phaser.Scene {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
+            energy -= 20;
+            energyText.setText('Energy: ' + energy);                      
                 }   
             }
-            energy -= 20;
-            energyText.setText('Energy: ' + energy);              
+            
           
         }
     }
