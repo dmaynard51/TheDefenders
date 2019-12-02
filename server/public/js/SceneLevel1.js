@@ -398,26 +398,29 @@ class SceneLevel1 extends Phaser.Scene {
 
     upgradeTurret = () => {
         if (energy >= 10) {
-            energy -= 10;
-            energyText.setText('Energy: ' + energy);
+            //energy -= 10;
+            //energyText.setText('Energy: ' + energy);
             this.turrets.setData('timerShootDelay', 1)
         }
     }
 
     upgradeTowers = () => {
         if (energy >= 10) {
-            energy -= 10;
-            energyText.setText('Energy: ' + energy);
+            //energy -= 10;
+            //energyText.setText('Energy: ' + energy);
         }
     }
 
     upgradeShip = () => {
         if (energy >= 10) {
             energy -= 10;
-            energyText.setText('Energy: ' + energy);
+            energyText.setText('Energy: ' + energy);            
+            //energyText.setText('Energy: ' + energy);
+            console.log(energy);
             this.turretType = 1;   
-            console.log('2');
+
         }
+                
     }
 
     placeTurret = (pointer) => {
@@ -433,8 +436,9 @@ class SceneLevel1 extends Phaser.Scene {
                     turret.place(i, j);
                 }   
             }
-            energy -= 50;
-            energyText.setText('Energy: ' + energy);            
+            energy -= 20;
+            energyText.setText('Energy: ' + energy);              
+          
         }
     }
 

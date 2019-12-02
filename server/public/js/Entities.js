@@ -76,7 +76,6 @@ class Player extends Entity {
             else { // when the 'manual timer' is triggered:
                 if (this.scene.turretType == 1){
                 var laser = new HomingLaser(this.scene, this.x, this.y);
-                     console.log(this.scene.turretType);
                 }
                 
                 else{
@@ -418,5 +417,90 @@ class Turret3 extends Entity {
 class Tower extends Entity {
     constructor(scene, x, y, key) {
         super(scene, x, y, key, 'Tower');
+    }
+}
+
+
+class ChaserShip extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'sprEnemy1', 'ChaserShip');
+
+        this.body.velocity.y = Phaser.Math.Between(50, 100);
+
+        this.states = {
+        MOVE_DOWN: 'MOVE_DOWN',
+        CHASE: 'CHASE'
+
+        };
+        this.state = this.states.MOVE_DOWN;
+        
+
+        
+        
+    }
+
+    update() {
+        
+        
+        
+        
+
+        if (!this.getData('isDead') && this.scene.player) {
+            
+            
+        var target = this.scene.player
+        var closest = 10000;
+        var targetNumber;
+
+        
+        
+        if (this.scene.towers.getChildren().length > 1)
+        {
+            for (var i = 0; i < this.scene.towers.getChildren().length; i++) {    
+                if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.towers.getChildren()[i].x, this.scene.towers.getChildren()[i].y) < closest)
+                {
+                    target = this.scene.towers.getChildren()[i];
+                    closest = Phaser.Math.Distance.Between(this.x, this.y, this.scene.towers.getChildren()[i].x, this.scene.towers.getChildren()[i].y);
+                    
+                    targetNumber = i
+                }
+            }
+
+            
+        }
+        
+
+            
+            if (Phaser.Math.Distance.Between(
+                this.x,
+                this.y,
+                target.x,
+                target.y
+            ) < 1000) {
+                this.state = this.states.CHASE;
+            }
+
+            if (this.state == this.states.CHASE) {
+                var dx = target.x - this.x;
+                var dy = target.y - this.y;
+
+                var angle = Math.atan2(dy, dx);
+
+                var speed = 100;
+                this.body.setVelocity(
+                    Math.cos(angle) * speed,
+                    Math.sin(angle) * speed
+                );
+
+                if (this.x < target.x) {
+                    this.angle -= 5;
+                }
+                
+                
+                else {
+                    this.angle += 5;
+                } 
+            }
+        }
     }
 }
