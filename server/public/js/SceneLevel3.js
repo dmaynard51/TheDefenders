@@ -99,6 +99,7 @@ class SceneLevel3 extends Phaser.Scene {
         subLvlText.setOrigin(0.5);
 
         // energy text
+        energy = 50;        
         energyText = this.add.text(this.game.config.width - 64, 96, 'Energy: ' + energy, {
             fontFamily: 'monospace',
             fontSize: 16,
@@ -400,6 +401,7 @@ class SceneLevel3 extends Phaser.Scene {
         if (energy >= 10) {
             energy -= 10;
             energyText.setText('Energy: ' + energy);
+            this.turretType = 1;   
         }
     }
 
@@ -425,22 +427,7 @@ class SceneLevel3 extends Phaser.Scene {
         if (!this.player.getData('isDead')) {
             this.player.update();
 
-            // player movement keys
-            if (this.keyLEFT.isDown) {
-                this.player.moveLeft();
-            }
-            else if (this.keyRIGHT.isDown) {
-                this.player.moveRight();
-            }
 
-            // player fire w/ spacebar
-            if (this.keySpace.isDown) {
-                this.player.setData('isShooting', true);
-            }
-            else {  // create delay between laser fire
-                this.player.setData('timerShootTick', this.player.getData('timerShootDelay') - 1);
-                this.player.setData('isShooting', false);
-            }
         }
 
         for (var i = 0; i < this.turrets.getChildren().length; i++) {
