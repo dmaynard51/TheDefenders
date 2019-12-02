@@ -116,7 +116,7 @@ class SceneLevel1 extends Phaser.Scene {
         subLvlText.setOrigin(0.5);
 
         // energy text
-        energy = 0;  // reset energy
+        energy = 50;  // reset energy
         energyText = this.add.text(this.game.config.width - 64, 96, 'Energy: ' + energy, {
             fontFamily: 'monospace',
             fontSize: 16,
@@ -323,6 +323,8 @@ class SceneLevel1 extends Phaser.Scene {
 
         this.axis = 0;
         this.axisIncrease = 0;
+        //turns turret into a homingturret
+        this.turretType = 0;
     }
 
     getEnemiesByType(type) {
@@ -413,19 +415,26 @@ class SceneLevel1 extends Phaser.Scene {
         if (energy >= 10) {
             energy -= 10;
             energyText.setText('Energy: ' + energy);
+            this.turretType = 1;   
+            console.log('2');
         }
     }
 
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
-        if (this.canPlaceTurret(i, j)) {
-            var turret = this.turrets.get();
-            if (turret) {
-                turret.setActive(true);
-                turret.setVisible(true);
-                turret.place(i, j);
-            }   
+        if (energy > 20)
+        {
+            if (this.canPlaceTurret(i, j)) {
+                var turret = this.turrets.get();
+                if (turret) {
+                    turret.setActive(true);
+                    turret.setVisible(true);
+                    turret.place(i, j);
+                }   
+            }
+            energy -= 50;
+            energyText.setText('Energy: ' + energy);            
         }
     }
 
@@ -438,6 +447,8 @@ class SceneLevel1 extends Phaser.Scene {
         if (!this.player.getData('isDead')) {
             this.player.update();
 
+
+/*
             // player movement keys
             if (this.keyLEFT.isDown) {
                 this.player.moveLeft();
@@ -453,7 +464,7 @@ class SceneLevel1 extends Phaser.Scene {
             else {  // create delay between laser fire
                 this.player.setData('timerShootTick', this.player.getData('timerShootDelay') - 1);
                 this.player.setData('isShooting', false);
-            }
+            }*/
         }
 
         for (var i = 0; i < this.turrets.getChildren().length; i++) {
@@ -511,7 +522,7 @@ class SceneLevel1 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (energy >= 50) {
+        if (energy >= 150) {
             this.scene.start('level1Trans');
         }
 

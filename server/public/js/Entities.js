@@ -39,7 +39,7 @@ class Player extends Entity {
     constructor(scene, x, y, key) {
         super(scene, x, y, key, 'Player');
         this.setData('speed', 200);
-        this.setData('isShooting', false);
+        this.setData('isShooting', true);
         this.setData('timerShootDelay', 10);
         this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
     }
@@ -74,7 +74,15 @@ class Player extends Entity {
                 this.setData('timerShootTick', this.getData('timerShootTick') + 1); // every game update, increase timerShootTick by one until we reach the value of timerShootDelay
             }
             else { // when the 'manual timer' is triggered:
-                var laser = new PlayerLaser(this.scene, this.x, this.y);
+                if (this.scene.turretType == 1){
+                var laser = new HomingLaser(this.scene, this.x, this.y);
+                     console.log(this.scene.turretType);
+                }
+                
+                else{
+                     var laser = new PlayerLaser(this.scene, this.x, this.y);
+                     console.log(this.scene.turretType);
+                }
                 this.scene.playerLasers.add(laser);
                 this.scene.sfx.laser.play(); // play the laser sound effect
                 this.setData('timerShootTick', 0);
@@ -88,6 +96,93 @@ class PlayerLaser extends Entity {
         super(scene, x, y, 'sprLaserPlayer');
         this.body.velocity.y = -200;
     }
+}
+
+class HomingLaser extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'sprLaserPlayer');
+        this.body.velocity.y = -200;
+        
+
+        this.states = {
+        MOVE_DOWN: 'MOVE_DOWN',
+        CHASE: 'CHASE'
+        };
+        this.state = this.states.MOVE_DOWN;        
+    }
+    
+    
+    update() {
+        
+        if (!this.getData('isDead') && this.scene.player) {
+        if (this.scene.enemies.getChildren().length > 1)
+        {            
+            
+        var target = this.scene.enemies.getChildren()[0];
+        var closest = 10000;
+        var targetNumber;
+
+        
+        
+
+            for (var i = 0; i < this.scene.enemies.getChildren().length; i++) {    
+                if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.enemies.getChildren()[i].x, this.scene.enemies.getChildren()[i].y) < closest)
+                {
+                    target = this.scene.enemies.getChildren()[i];
+                    closest = Phaser.Math.Distance.Between(this.x, this.y, this.scene.enemies.getChildren()[i].x, this.scene.enemies.getChildren()[i].y);
+                    
+                    targetNumber = i
+                }
+            }
+
+            
+        }
+                
+                
+            
+
+
+
+        if (this.scene.enemies.getChildren().length > 1){
+            var randomNum = Phaser.Math.Between(0, (this.scene.enemies.getChildren().length)-1);
+            
+            var enemy = target;
+            
+
+                this.state = this.states.CHASE;
+            
+
+            if (this.state == this.states.CHASE) {
+                var dx = enemy.x - this.x;
+                var dy = enemy.y - this.y;
+
+                var angle = Math.atan2(dy, dx);
+
+                var speed = 200;
+                this.body.setVelocity(
+                    Math.cos(angle) * speed,
+                    Math.sin(angle) * speed
+                );
+
+                if (this.x < enemy.x) {
+                    this.angle -= 5;
+                }
+                else {
+                    this.angle += 5;
+                } 
+            }
+            if (enemy.getData('isDead'))
+            {
+                this.destroy();
+            }
+            
+                    
+        }
+        
+
+    }  
+    }
+    
 }
 
 class EnemyLaser extends Entity {
