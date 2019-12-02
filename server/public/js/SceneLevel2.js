@@ -1,4 +1,5 @@
 var energy = 50;
+var towerCount;
 
 class SceneLevel2 extends Phaser.Scene {
     constructor() {
@@ -198,34 +199,30 @@ class SceneLevel2 extends Phaser.Scene {
             delay: 1500,
             callback: function() {
                 var enemy = null;
-                
-                if (Phaser.Math.Between(1, 3) == 1) {
-                    enemy = new BasicShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
-                    );
-                    enemy.setScale(1.5);
-                }
-                else if (Phaser.Math.Between(1, 3) == 2) {
-                    enemy = new SpeederShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
-                    );
-                    enemy.setScale(1.5);
-                }
-                else {
-                    enemy = new GunnerShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
-                    );
-                    enemy.setScale(1.5);
-                }
-    
+                var enemy2 = null;
+
+                    if (this.getEnemiesByType('ChaserShip').length < 5) {
+                        enemy = new ChaserShip(
+                            this,
+                            0,
+                            0
+                        );
+                    }
+                    if (this.getEnemiesByType('ChaserShip').length < 5) {
+                        enemy2 = new ChaserShip(
+                            this,
+                            1000,
+                            0
+                        );
+                    }    
                 if (enemy !== null) {
+                    enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
                     this.enemies.add(enemy);
+                    
+                if (enemy2 !== null) {
+                    enemy2.setScale(Phaser.Math.Between(10, 20) * 0.1);
+                    this.enemies.add(enemy2);
+                }                    
                 }
             },
             callbackScope: this,
@@ -299,6 +296,7 @@ class SceneLevel2 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 tower.destroy();
+                towerCount -= 1;
             }
         });
 

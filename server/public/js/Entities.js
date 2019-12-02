@@ -486,7 +486,7 @@ class ChaserShip extends Entity {
 
                 var angle = Math.atan2(dy, dx);
 
-                var speed = 100;
+                var speed = 150;
                 this.body.setVelocity(
                     Math.cos(angle) * speed,
                     Math.sin(angle) * speed
