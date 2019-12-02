@@ -509,7 +509,7 @@ class SceneLevel2 extends Phaser.Scene {
         }
 
         // lose if all towers destroyed
-        if (towerCount <= 0) {
+        if (towerCount <= 5) {
             this.scene.start('SceneGameOver');
         }
     }

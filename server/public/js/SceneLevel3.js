@@ -1,4 +1,5 @@
 var energy = 50;
+var towerCount;
 
 class SceneLevel3 extends Phaser.Scene {
     constructor() {
@@ -132,6 +133,7 @@ class SceneLevel3 extends Phaser.Scene {
             repeat: 13,
             setXY: { x: 32, y: this.game.config.height - 32, stepX: 64 }
         });
+        towerCount = 14;  // set initial tower count        
 
         this.turrets = this.add.group({ classType: Turret3});  // create turrets
         this.input.on('pointerdown', this.placeTurret);  // place turret on click
@@ -298,6 +300,7 @@ class SceneLevel3 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 tower.destroy();
+                towerCount -= 1;
             }
         });
 
@@ -504,7 +507,7 @@ class SceneLevel3 extends Phaser.Scene {
         }
 
         // lose if all towers destroyed
-        if (towerCount <= 0) {
+        if (towerCount <= 5) {
             this.scene.start('SceneGameOver');
         }
     }
