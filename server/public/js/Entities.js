@@ -80,7 +80,7 @@ class Player extends Entity {
                 
                 else{
                      var laser = new PlayerLaser(this.scene, this.x, this.y);
-                     console.log(this.scene.turretType);
+                     //console.log(this.scene.turretType);
                 }
                 this.scene.playerLasers.add(laser);
                 this.scene.sfx.laser.play(); // play the laser sound effect
@@ -246,7 +246,7 @@ class Turret1 extends Entity {
         super(scene, x, y, 'probe1', 'Turret');
 
         this.setData('isShooting', false);
-        this.setData('timerShootDelay', 10);
+        this.setData('timerShootDelay', 30);
         this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
     }
 
@@ -270,30 +270,51 @@ class Turret1 extends Entity {
                 this.setData('timerShootTick', this.getData('timerShootTick') + 1);
             }
             else {
-                var rotateleft = -30;
-                var rotateright = 30;
-                var laser = new PlayerLaser(this.scene, this.x, this.y);
-                this.scene.playerLasers.add(laser);
-                
-                if (this.scene.axis ==0) {
-                    this.scene.axisIncrease += 10;
+                    if (this.scene.turretUpgrade == 0)
+                    {
+                    var rotateleft = -30;
+                    var rotateright = 30;
+                    var laser = new PlayerLaser(this.scene, this.x, this.y);
+                    this.scene.playerLasers.add(laser);
                     
-                    if (this.scene.axisIncrease == 30) {
-                        this.scene.axis = 1;
+                    if (this.scene.axis ==0) {
+                        this.scene.axisIncrease += 10;
+                        
+                        if (this.scene.axisIncrease == 30) {
+                            this.scene.axis = 1;
+                        }
                     }
+                    else {
+                        this.scene.axisIncrease -= 10;
+                        
+                        if (this.scene.axisIncrease == -30) {
+                            this.scene.axis = 0;
+                        }
+                    } 
+    
+                    laser.body.velocity.x = this.scene.axisIncrease;
+                    this.scene.sfx.laser.play();
+                    this.setData('timerShootTick', 0);
                 }
-                else {
-                    this.scene.axisIncrease -= 10;
+                if (this.scene.turretUpgrade == 1)
+                {
+                    var laser = new PlayerLaser(this.scene, this.x, this.y);
+                    var laser2 = new PlayerLaser(this.scene, this.x, this.y);  
+                    var laser3 = new PlayerLaser(this.scene, this.x, this.y);                      
+                    this.scene.playerLasers.add(laser);  
+                    this.scene.playerLasers.add(laser2);   
+                    this.scene.playerLasers.add(laser3);                      
+                    laser.body.velocity.x = -30
+                    laser2.body.velocity.x = 0       
+                    laser3.body.velocity.x = 30                       
                     
-                    if (this.scene.axisIncrease == -30) {
-                        this.scene.axis = 0;
-                    }
-                } 
-
-                laser.body.velocity.x = this.scene.axisIncrease;
-                this.scene.sfx.laser.play();
-                this.setData('timerShootTick', 0);
+                    //this.scene.sfx.laser.play();
+                    this.setData('timerShootTick', 0);                        
+                }
+                
             }
+            
+            
         }
     }
 }
@@ -328,30 +349,51 @@ class Turret2 extends Entity {
                 this.setData('timerShootTick', this.getData('timerShootTick') + 1);
             }
             else {
-                var rotateleft = -30;
-                var rotateright = 30;
-                var laser = new PlayerLaser(this.scene, this.x, this.y);
-                this.scene.playerLasers.add(laser);
-                
-                if (this.scene.axis ==0) {
-                    this.scene.axisIncrease += 10;
+                    if (this.scene.turretUpgrade == 0)
+                    {
+                    var rotateleft = -30;
+                    var rotateright = 30;
+                    var laser = new PlayerLaser(this.scene, this.x, this.y);
+                    this.scene.playerLasers.add(laser);
                     
-                    if (this.scene.axisIncrease == 30) {
-                        this.scene.axis = 1;
+                    if (this.scene.axis ==0) {
+                        this.scene.axisIncrease += 10;
+                        
+                        if (this.scene.axisIncrease == 30) {
+                            this.scene.axis = 1;
+                        }
                     }
+                    else {
+                        this.scene.axisIncrease -= 10;
+                        
+                        if (this.scene.axisIncrease == -30) {
+                            this.scene.axis = 0;
+                        }
+                    } 
+    
+                    laser.body.velocity.x = this.scene.axisIncrease;
+                    this.scene.sfx.laser.play();
+                    this.setData('timerShootTick', 0);
                 }
-                else {
-                    this.scene.axisIncrease -= 10;
+                if (this.scene.turretUpgrade == 1)
+                {
+                    var laser = new PlayerLaser(this.scene, this.x, this.y);
+                    var laser2 = new PlayerLaser(this.scene, this.x, this.y);  
+                    var laser3 = new PlayerLaser(this.scene, this.x, this.y);                      
+                    this.scene.playerLasers.add(laser);  
+                    this.scene.playerLasers.add(laser2);   
+                    this.scene.playerLasers.add(laser3);                      
+                    laser.body.velocity.x = -30
+                    laser2.body.velocity.x = 0       
+                    laser3.body.velocity.x = 30                       
                     
-                    if (this.scene.axisIncrease == -30) {
-                        this.scene.axis = 0;
-                    }
-                } 
-
-                laser.body.velocity.x = this.scene.axisIncrease;
-                this.scene.sfx.laser.play();
-                this.setData('timerShootTick', 0);
+                    //this.scene.sfx.laser.play();
+                    this.setData('timerShootTick', 0);                        
+                }
+                
             }
+            
+            
         }
     }
 }
@@ -386,30 +428,51 @@ class Turret3 extends Entity {
                 this.setData('timerShootTick', this.getData('timerShootTick') + 1);
             }
             else {
-                var rotateleft = -30;
-                var rotateright = 30;
-                var laser = new PlayerLaser(this.scene, this.x, this.y);
-                this.scene.playerLasers.add(laser);
-                
-                if (this.scene.axis ==0) {
-                    this.scene.axisIncrease += 10;
+                    if (this.scene.turretUpgrade == 0)
+                    {
+                    var rotateleft = -30;
+                    var rotateright = 30;
+                    var laser = new PlayerLaser(this.scene, this.x, this.y);
+                    this.scene.playerLasers.add(laser);
                     
-                    if (this.scene.axisIncrease == 30) {
-                        this.scene.axis = 1;
+                    if (this.scene.axis ==0) {
+                        this.scene.axisIncrease += 10;
+                        
+                        if (this.scene.axisIncrease == 30) {
+                            this.scene.axis = 1;
+                        }
                     }
+                    else {
+                        this.scene.axisIncrease -= 10;
+                        
+                        if (this.scene.axisIncrease == -30) {
+                            this.scene.axis = 0;
+                        }
+                    } 
+    
+                    laser.body.velocity.x = this.scene.axisIncrease;
+                    this.scene.sfx.laser.play();
+                    this.setData('timerShootTick', 0);
                 }
-                else {
-                    this.scene.axisIncrease -= 10;
+                if (this.scene.turretUpgrade == 1)
+                {
+                    var laser = new PlayerLaser(this.scene, this.x, this.y);
+                    var laser2 = new PlayerLaser(this.scene, this.x, this.y);  
+                    var laser3 = new PlayerLaser(this.scene, this.x, this.y);                      
+                    this.scene.playerLasers.add(laser);  
+                    this.scene.playerLasers.add(laser2);   
+                    this.scene.playerLasers.add(laser3);                      
+                    laser.body.velocity.x = -30
+                    laser2.body.velocity.x = 0       
+                    laser3.body.velocity.x = 30                       
                     
-                    if (this.scene.axisIncrease == -30) {
-                        this.scene.axis = 0;
-                    }
-                } 
-
-                laser.body.velocity.x = this.scene.axisIncrease;
-                this.scene.sfx.laser.play();
-                this.setData('timerShootTick', 0);
+                    //this.scene.sfx.laser.play();
+                    this.setData('timerShootTick', 0);                        
+                }
+                
             }
+            
+            
         }
     }
 }

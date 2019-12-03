@@ -153,7 +153,7 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeTurretButton.setScale(1);
 
         // upgrade turret text
-        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 2', {
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -167,7 +167,7 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeTowersButton.setScale(1);
 
         // upgrade towers text
-        this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 2', {
+        this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -181,7 +181,7 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeShipButton.setScale(1);
 
         // upgrade ship text
-        this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 80, 'Ship\nLevel 2', {
+        this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 80, 'Ship\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -315,6 +315,7 @@ class SceneLevel2 extends Phaser.Scene {
         this.axisIncrease = 0;
         //turns turret into a homingturret
         this.turretType = 0;
+        this.turretUpgrade = 0;        
     }
 
     getEnemiesByType(type) {
@@ -388,11 +389,14 @@ class SceneLevel2 extends Phaser.Scene {
 
     upgradeTurret = () => {
         if (energy >= 10) {
-            //energy -= 10;
-            //energyText.setText('Energy: ' + energy);
-            this.turrets.setData('timerShootDelay', 1)
+            energy -= 10;
+            energyText.setText('Energy: ' + energy);
+            this.turretUpgrade = 1; 
+
+            this.upgradeTurretText.setText('Turret\nLevel 2');
         }
     }
+
 
     upgradeTowers = () => {
         if (energy >= 10) {
@@ -407,7 +411,10 @@ class SceneLevel2 extends Phaser.Scene {
             energyText.setText('Energy: ' + energy);            
             //energyText.setText('Energy: ' + energy);
             console.log(energy);
-            this.turretType = 1;   
+            this.turretType = 1;
+            this.upgradeShipText.setText('Ship\nLevel 2'); 
+            
+            
 
         }
                 

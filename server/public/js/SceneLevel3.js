@@ -317,6 +317,8 @@ class SceneLevel3 extends Phaser.Scene {
 
         this.axis = 0;
         this.axisIncrease = 0;
+        this.turretType = 0;
+        this.turretUpgrade = 0;          
     }
 
     getEnemiesByType(type) {
@@ -390,11 +392,14 @@ class SceneLevel3 extends Phaser.Scene {
 
     upgradeTurret = () => {
         if (energy >= 10) {
-            //energy -= 10;
-            //energyText.setText('Energy: ' + energy);
-            this.turrets.setData('timerShootDelay', 1)
+            energy -= 10;
+            energyText.setText('Energy: ' + energy);
+            this.turretUpgrade = 1; 
+
+            this.upgradeTurretText.setText('Turret\nLevel 2');
         }
     }
+
 
     upgradeTowers = () => {
         if (energy >= 10) {
@@ -409,7 +414,10 @@ class SceneLevel3 extends Phaser.Scene {
             energyText.setText('Energy: ' + energy);            
             //energyText.setText('Energy: ' + energy);
             console.log(energy);
-            this.turretType = 1;   
+            this.turretType = 1;
+            this.upgradeShipText.setText('Ship\nLevel 2'); 
+            
+            
 
         }
                 
