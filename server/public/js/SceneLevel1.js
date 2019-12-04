@@ -474,15 +474,6 @@ class SceneLevel1 extends Phaser.Scene {
             else if (this.keyRIGHT.isDown) {
                 this.player.moveRight();
             }
-
-           /* // player fire w/ spacebar
-            if (this.keySpace.isDown) {
-                this.player.setData('isShooting', true);
-            }
-            else {  // create delay between laser fire
-                this.player.setData('timerShootTick', this.player.getData('timerShootDelay') - 1);
-                this.player.setData('isShooting', false);
-            }*/
         }
 
         for (var i = 0; i < this.turrets.getChildren().length; i++) {

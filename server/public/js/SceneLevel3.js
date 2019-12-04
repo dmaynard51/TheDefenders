@@ -454,8 +454,13 @@ class SceneLevel3 extends Phaser.Scene {
         // while player is still alive
         if (!this.player.getData('isDead')) {
             this.player.update();
-
-
+            // player movement keys
+            if (this.keyLEFT.isDown) {
+                this.player.moveLeft();
+            }
+            else if (this.keyRIGHT.isDown) {
+                this.player.moveRight();
+            }
         }
 
         for (var i = 0; i < this.turrets.getChildren().length; i++) {
