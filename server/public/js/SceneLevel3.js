@@ -1,5 +1,6 @@
 var energy = 50;
 var towerCount;
+var deadEnemyCount = 0;
 
 class SceneLevel3 extends Phaser.Scene {
     constructor() {
@@ -10,7 +11,7 @@ class SceneLevel3 extends Phaser.Scene {
         // images
         this.load.image('probe3', 'assets/ourStuff/ourProbes/probe2.png');
         this.load.image('tower3', 'assets/ourStuff/ourTowers/towerL3.png');
-        this.load.image('bgL3', 'assets/ourStuff/ourBackgrounds/Level3BG.png');
+        this.load.image('bgL3', 'assets/ourStuff/ourBackgrounds/Level3bg.png');
         this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
         this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
         this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
@@ -255,6 +256,7 @@ class SceneLevel3 extends Phaser.Scene {
                 playerLaser.destroy();
                 energy += 10;
                 energyText.setText('Energy: ' + energy);
+                deadEnemyCount += 1;
             }
         });
 
@@ -278,6 +280,7 @@ class SceneLevel3 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 turret.destroy();
+                deadEnemyCount += 1;
             }
         });
 
@@ -510,8 +513,9 @@ class SceneLevel3 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (energy >= 150) {
+        if (deadEnemyCount >= 5) {
             this.scene.start('SceneVictory');
+            deadEnemyCount = 0;
         }
 
         // lose if all towers destroyed

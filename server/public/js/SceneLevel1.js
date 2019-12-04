@@ -3,6 +3,7 @@ var energyText;
 var lvlText;
 var subLvlText;
 var towerCount;
+var deadEnemyCount = 0;
 
 var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
@@ -28,6 +29,7 @@ class SceneLevel1 extends Phaser.Scene {
         this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
         this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
         this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
+        this.load.image('sprLaserTurret', 'assets/ourStuff/roundBullet.png');
         this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
 
         // spritesheets
@@ -51,7 +53,7 @@ class SceneLevel1 extends Phaser.Scene {
         // sfx
         this.load.audio('sndExplode0', 'assets/ourStuff/ourSounds/boom9.wav');
         this.load.audio('sndExplode1', 'assets/ourStuff/ourSounds/explode1.wav');
-        this.load.audio('sndLaser', 'assets/ourStuff/ourSounds/laser1.wav');
+        this.load.audio('sndLaser', 'assets/ourStuff/ourSounds/laser0.wav');
     }
 
     create() {
@@ -262,6 +264,7 @@ class SceneLevel1 extends Phaser.Scene {
                 playerLaser.destroy();
                 energy += 10;
                 energyText.setText('Energy: ' + energy);
+                deadEnemyCount += 1;
             }
         });
 
@@ -285,6 +288,7 @@ class SceneLevel1 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 turret.destroy();
+                deadEnemyCount += 1;
             }
         });
 
@@ -462,7 +466,7 @@ class SceneLevel1 extends Phaser.Scene {
             this.player.update();
 
 
-/*
+
             // player movement keys
             if (this.keyLEFT.isDown) {
                 this.player.moveLeft();
@@ -471,7 +475,7 @@ class SceneLevel1 extends Phaser.Scene {
                 this.player.moveRight();
             }
 
-            // player fire w/ spacebar
+           /* // player fire w/ spacebar
             if (this.keySpace.isDown) {
                 this.player.setData('isShooting', true);
             }
@@ -536,8 +540,9 @@ class SceneLevel1 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (energy >= 60) {
+        if (deadEnemyCount >= 5) {
             this.scene.start('level1Trans');
+            deadEnemyCount = 0;
         }
 
         // lose if all towers destroyed

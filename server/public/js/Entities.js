@@ -83,7 +83,7 @@ class Player extends Entity {
                      //console.log(this.scene.turretType);
                 }
                 this.scene.playerLasers.add(laser);
-                this.scene.sfx.laser.play(); // play the laser sound effect
+                //this.scene.sfx.laser.play(); // play the laser sound effect
                 this.setData('timerShootTick', 0);
             }
         }
@@ -99,7 +99,7 @@ class PlayerLaser extends Entity {
 
 class HomingLaser extends Entity {
     constructor(scene, x, y) {
-        super(scene, x, y, 'sprLaserPlayer');
+        super(scene, x, y, 'sprLaserTurret');
         this.body.velocity.y = -200;
         
 
@@ -293,7 +293,7 @@ class Turret1 extends Entity {
                     } 
     
                     laser.body.velocity.x = this.scene.axisIncrease;
-                    this.scene.sfx.laser.play();
+                    //this.scene.sfx.laser.play();
                     this.setData('timerShootTick', 0);
                 }
                 if (this.scene.turretUpgrade == 1)
@@ -372,7 +372,7 @@ class Turret2 extends Entity {
                     } 
     
                     laser.body.velocity.x = this.scene.axisIncrease;
-                    this.scene.sfx.laser.play();
+                    //this.scene.sfx.laser.play();
                     this.setData('timerShootTick', 0);
                 }
                 if (this.scene.turretUpgrade == 1)
@@ -451,7 +451,7 @@ class Turret3 extends Entity {
                     } 
     
                     laser.body.velocity.x = this.scene.axisIncrease;
-                    this.scene.sfx.laser.play();
+                    //this.scene.sfx.laser.play();
                     this.setData('timerShootTick', 0);
                 }
                 if (this.scene.turretUpgrade == 1)
