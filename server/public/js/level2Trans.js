@@ -12,10 +12,12 @@ class level2Trans extends Phaser.Scene {
         this.load.image('sprBtnRestart', 'assets/P3SpaceShooterContent/sprBtnRestart.png');
         this.load.image('sprBtnRestartHover', 'assets/P3SpaceShooterContent/sprBtnRestartHover.png');
         this.load.image('sprBtnRestartDown', 'assets/P3SpaceShooterContent/sprBtnRestartDown.png');
-
+        this.load.image('bgL2', '/assets/P3SpaceShooterContent/Level2bg.png');
+        this.load.image('bgL3', 'assets/ourStuff/ourBackgrounds/Level3BG.png');        
         // sfx
         this.load.audio('sndBtnOver', 'assets/P3SpaceShooterContent/sndBtnOver.wav');
         this.load.audio('sndBtnDown', 'assets/ourStuff/ourSounds/boom7_msdn.wav');
+        
     }
 
     create() {

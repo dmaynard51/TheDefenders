@@ -5,6 +5,8 @@ class SceneVictory extends Phaser.Scene {
     
     create() {
         // title text
+        
+        this.add.image(512, 288, 'bgL3');        
         this.title = this.add.text(this.game.config.width * 0.5, 128, 'VICTORY!', {
             fontFamily: 'monospace',
             fontSize: 48,

@@ -215,27 +215,42 @@ class SceneLevel1 extends Phaser.Scene {
             delay: 1500,
             callback: function() {
                 var enemy = null;
-                
-                if (Phaser.Math.Between(1, 2) == 1) {
+                var spdShip = null;
+
+                    var randomSize = Phaser.Math.Between(10, 20) * 0.1;
+                    var xLocation = Phaser.Math.Between(0, 15 * 64);
+                    var xSpdLocation = Phaser.Math.Between(0, 15 * 64);
+                    var xIncrease = 32;
+                    
+                //create wave of 5 enemies at random location
+                for (var i = 0; i < 5; i++) {
+                    
+                    
                     enemy = new BasicShip(
                         this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
+                        xLocation + xIncrease,
+                        0   
                     );
-                    enemy.setScale(1.5);
+                    
+                    xIncrease += 30;
+                    
+                    enemy.setScale(randomSize);
+                    this.enemies.add(enemy);   
+                    
+                    }
+                    
+                // randomize speeder ship
+                var randSpeed = Phaser.Math.Between(1, 10);
+                if (randSpeed > 8)
+                {
+                    spdShip = new SpeederShip(
+                        this, xSpdLocation, 0);
+                    
+                    spdShip.setScale(randomSize);
+                    this.enemies.add(enemy); 
                 }
-                else {
-                    enemy = new SpeederShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
-                    );
-                    enemy.setScale(1.5);
-                }
-    
-                if (enemy !== null) {
-                    this.enemies.add(enemy);
-                }
+                
+   
             },
             callbackScope: this,
             loop: true

@@ -11,7 +11,7 @@ class SceneLevel2 extends Phaser.Scene {
         // images
         this.load.image('probe2', 'assets/ourStuff/ourProbes/ourShip.png');
         this.load.image('tower2', 'assets/ourStuff/ourTowers/towerL2.png');
-        this.load.image('bgL2', 'assets/ourStuff/ourBackgrounds/Level2BG.png');
+        //this.load.image('bgL2', 'assets/ourStuff/ourBackgrounds/Level2BG.png');
         this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
         this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
         this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
@@ -44,7 +44,7 @@ class SceneLevel2 extends Phaser.Scene {
 
     create() {
         //Background
-        this.add.image(512, 288, 'bgL2');
+        this.add.image(512, 288, 'sprBg0');
 
 
         // animations
