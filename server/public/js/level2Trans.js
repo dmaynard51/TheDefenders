@@ -15,17 +15,17 @@ class level2Trans extends Phaser.Scene {
         this.load.image('bgL2', '/assets/P3SpaceShooterContent/Level2bg.png');
         this.load.image('bgL3', 'assets/ourStuff/ourBackgrounds/Level3BG.png');        
         // sfx
-        this.load.audio('sndBtnOver', 'assets/P3SpaceShooterContent/sndBtnOver.wav');
-        this.load.audio('sndBtnDown', 'assets/ourStuff/ourSounds/boom7_msdn.wav');
+        //this.load.audio('sndBtnOver', 'assets/P3SpaceShooterContent/sndBtnOver.wav');
+        //this.load.audio('sndBtnDown', 'assets/ourStuff/ourSounds/boom7_msdn.wav');
         
     }
 
     create() {
         // sfx
-        this.sfx = {
+        /*this.sfx = {
             btnOver: this.sound.add('sndBtnOver'),
             btnDown: this.sound.add('sndBtnDown')
-        };
+        };*/
 
         // play button
         this.btnPlay = this.add.sprite(
@@ -36,22 +36,24 @@ class level2Trans extends Phaser.Scene {
 
         this.btnPlay.setInteractive();  // set play button
 
+/*
         // button texture on hover
         this.btnPlay.on('pointerover', function() {
             this.btnPlay.setTexture('sprBtnPlayHover');
             this.sfx.btnOver.play();
-        }, this);
+        }, this);*/
 
         // button texture not on hover
         this.btnPlay.on('pointerout', function() {
             this.setTexture('sprBtnPlay');
         });
 
+/*
         // button texture when pressed
         this.btnPlay.on('pointerdown', function() {
             this.btnPlay.setTexture('sprBtnPlayDown');
             this.sfx.btnDown.play();
-        }, this);
+        }, this);*/
 
         // button texture when released
         this.btnPlay.on('pointerup', function() {

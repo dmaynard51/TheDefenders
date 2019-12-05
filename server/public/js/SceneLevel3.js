@@ -36,9 +36,10 @@ class SceneLevel3 extends Phaser.Scene {
         );
 
         // sfx
+        /*
         this.load.audio('sndExplode0', 'assets/P3SpaceShooterContent/sndExplode0.wav');
         this.load.audio('sndExplode1', 'assets/P3SpaceShooterContent/sndExplode1.wav');
-        this.load.audio('sndLaser', 'assets/P3SpaceShooterContent/sndLaser.wav');
+        this.load.audio('sndLaser', 'assets/P3SpaceShooterContent/sndLaser.wav');*/
     }
 
     create() {
@@ -73,13 +74,14 @@ class SceneLevel3 extends Phaser.Scene {
         });
 
         // sfx
+        /*
         this.sfx = {
             explosions: [
                 this.sound.add('sndExplode0'),
                 this.sound.add('sndExplode1')
             ],
             laser: this.sound.add('sndLaser')
-        };
+        };*/
 
         
         this.drawLines();  // draw grid lines

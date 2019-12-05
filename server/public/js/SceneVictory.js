@@ -25,11 +25,12 @@ class SceneVictory extends Phaser.Scene {
         });
         energyText.setOrigin(0.5);*/
 
+/*
         // sfx
         this.sfx = {
             btnOver: this.sound.add('sndBtnOver'),
             btnDown: this.sound.add('sndBtnDown')
-        };
+        };*/
 
         // restart button
         this.btnRestart = this.add.sprite(
@@ -43,7 +44,7 @@ class SceneVictory extends Phaser.Scene {
         // button texture on hover
         this.btnRestart.on('pointerover', function() {
             this.btnRestart.setTexture('sprBtnRestartHover');
-            this.sfx.btnOver.play();
+            //this.sfx.btnOver.play();
         }, this);
 
         // button texture not on hover
@@ -54,7 +55,7 @@ class SceneVictory extends Phaser.Scene {
         // button texture when pressed
         this.btnRestart.on('pointerdown', function() {
             this.btnRestart.setTexture('sprBtnRestartDown');
-            this.sfx.btnDown.play();
+            //this.sfx.btnDown.play();
         }, this);
 
         // button texture when released

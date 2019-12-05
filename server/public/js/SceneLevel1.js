@@ -51,9 +51,9 @@ class SceneLevel1 extends Phaser.Scene {
         );
 
         // sfx
-        this.load.audio('sndExplode0', 'assets/ourStuff/ourSounds/boom9.wav');
-        this.load.audio('sndExplode1', 'assets/ourStuff/ourSounds/explode1.wav');
-        this.load.audio('sndLaser', 'assets/ourStuff/ourSounds/laser0.wav');
+        //this.load.audio('sndExplode0', 'assets/ourStuff/ourSounds/boom9.wav');
+        //this.load.audio('sndExplode1', 'assets/ourStuff/ourSounds/explode1.wav');
+        //this.load.audio('sndLaser', 'assets/ourStuff/ourSounds/laser0.wav');
     }
 
     create() {
@@ -88,13 +88,13 @@ class SceneLevel1 extends Phaser.Scene {
         });
 
         // sfx
-        this.sfx = {
+        /*this.sfx = {
             explosions: [
                 this.sound.add('sndExplode0'),
                 this.sound.add('sndExplode1')
             ],
             laser: this.sound.add('sndLaser')
-        };
+        };*/
 
 
         this.drawLines();  // draw grid lines
