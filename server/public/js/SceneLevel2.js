@@ -196,6 +196,7 @@ class SceneLevel2 extends Phaser.Scene {
         this.enemies = this.add.group();
         this.enemyLasers = this.add.group();
         this.playerLasers = this.add.group();
+        this.lvl = 2;        
 
         // spawn enemies timer event
         this.time.addEvent({
@@ -511,7 +512,7 @@ class SceneLevel2 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 5) {
+        if (deadEnemyCount >= 20) {
             this.scene.start('level2Trans');
             deadEnemyCount = 0;
         }

@@ -549,8 +549,13 @@ class ChaserShip extends Entity {
                 var dy = target.y - this.y;
 
                 var angle = Math.atan2(dy, dx);
-
-                var speed = 150;
+                var speed = 0;                
+                if (this.scene.lvl == 1){
+                speed = 150;
+                }
+                else {
+                    speed = 200;
+                }
                 this.body.setVelocity(
                     Math.cos(angle) * speed,
                     Math.sin(angle) * speed

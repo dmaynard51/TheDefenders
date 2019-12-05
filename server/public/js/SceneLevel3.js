@@ -156,7 +156,7 @@ class SceneLevel3 extends Phaser.Scene {
         this.upgradeTurretButton.setScale(1);
 
         // upgrade turret text
-        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 368, 'Turret\nLevel 3', {
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 368, 'Turret\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -196,41 +196,66 @@ class SceneLevel3 extends Phaser.Scene {
         this.enemies = this.add.group();
         this.enemyLasers = this.add.group();
         this.playerLasers = this.add.group();
+        this.lvl = 3;        
+
 
         // spawn enemies timer event
         this.time.addEvent({
             delay: 1500,
             callback: function() {
                 var enemy = null;
-                
-                if (Phaser.Math.Between(1, 3) == 1) {
+                var spdShip = null;
+
+                    var randomSize = Phaser.Math.Between(10, 20) * 0.1;
+                    var xLocation = Phaser.Math.Between(0, 15 * 64);
+                    var xSpdLocation = Phaser.Math.Between(0, 15 * 64);
+                    var xIncrease = 32;
+                    
+                //create wave of 5 enemies at random location
+                for (var i = 0; i < 5; i++) {
+                    
+                    
                     enemy = new BasicShip(
                         this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
+                        xLocation + xIncrease,
+                        0   
                     );
-                    enemy.setScale(1.5);
-                }
-                else if (Phaser.Math.Between(1, 3) == 2) {
-                    enemy = new SpeederShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
-                    );
-                    enemy.setScale(1.5);
-                }
-                else {
-                    enemy = new GunnerShip(
-                        this,
-                        (Phaser.Math.Between(0, 13) * 64) + 32,
-                        0
-                    );
-                    enemy.setScale(1.5);
-                }
-    
+                    
+                    xIncrease += 30;
+                    
+                    enemy.setScale(randomSize);
+                    this.enemies.add(enemy);   
+                    
+                    }
+                    
+                var enemy = null;
+                var enemy2 = null;
+
+                    if (this.getEnemiesByType('ChaserShip').length < 5) {
+                        enemy = new ChaserShip(
+                            this,
+                            0,
+                            0
+                        );
+                    }
+                    if (this.getEnemiesByType('ChaserShip').length < 5) {
+                        enemy2 = new ChaserShip(
+                            this,
+                            1000,
+                            0
+                        );
+                    }    
                 if (enemy !== null) {
+                    enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
                     this.enemies.add(enemy);
+                    
+                if (enemy2 !== null) {
+                    enemy2.setScale(Phaser.Math.Between(10, 20) * 0.1);
+                    this.enemies.add(enemy2);
+                }                    
                 }
+                
+   
             },
             callbackScope: this,
             loop: true
@@ -513,7 +538,7 @@ class SceneLevel3 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 5) {
+        if (deadEnemyCount >= 25) {
             this.scene.start('SceneVictory');
             deadEnemyCount = 0;
         }
