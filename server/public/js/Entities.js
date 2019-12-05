@@ -40,7 +40,7 @@ class Player extends Entity {
         super(scene, x, y, key, 'Player');
         this.setData('speed', 200);
         this.setData('isShooting', true);
-        this.setData('timerShootDelay', 10);
+        this.setData('timerShootDelay', 30);
         this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
     }
 
@@ -75,6 +75,7 @@ class Player extends Entity {
             }
             else { // when the 'manual timer' is triggered:
                 if (this.scene.turretType == 1){
+                    this.setData('timerShootDelay', 10);
                 var laser = new HomingLaser(this.scene, this.x, this.y);
                 }
                 

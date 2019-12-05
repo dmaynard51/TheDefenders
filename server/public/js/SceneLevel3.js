@@ -151,19 +151,19 @@ class SceneLevel3 extends Phaser.Scene {
         this.upgradeText.setOrigin(0.5);
 
         // upgrade turret
-        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'probe3');
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 320, 'probe3');
         this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
         this.upgradeTurretButton.setScale(1);
 
         // upgrade turret text
-        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 3', {
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 368, 'Turret\nLevel 3', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
             align: 'center'
         });
         this.upgradeTurretText.setOrigin(0.5);
-
+        /*
         // upgrade towers
         this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower3');
         this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
@@ -176,7 +176,7 @@ class SceneLevel3 extends Phaser.Scene {
             color: '#ffffff',
             align: 'center'
         });
-        this.upgradeTowersText.setOrigin(0.5);
+        this.upgradeTowersText.setOrigin(0.5);*/
 
         // upgrade ship laser
         this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer');

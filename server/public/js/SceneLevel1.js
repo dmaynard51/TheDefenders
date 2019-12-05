@@ -164,12 +164,12 @@ class SceneLevel1 extends Phaser.Scene {
         this.upgradeText.setOrigin(0.5);
 
         // upgrade turret
-        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'probe1');
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 320, 'probe1');
         this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
         this.upgradeTurretButton.setScale(1);
 
         // upgrade turret text
-        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 1', {
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 368, 'Turret\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -178,10 +178,11 @@ class SceneLevel1 extends Phaser.Scene {
         this.upgradeTurretText.setOrigin(0.5);
 
         // upgrade towers
-        this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower1');
-        this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
-        this.upgradeTowersButton.setScale(1);
+        //this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower1');
+        //this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
+        //this.upgradeTowersButton.setScale(1);
 
+        /*
         // upgrade towers text
         this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
             fontFamily: 'monospace',
@@ -189,7 +190,7 @@ class SceneLevel1 extends Phaser.Scene {
             color: '#ffffff',
             align: 'center'
         });
-        this.upgradeTowersText.setOrigin(0.5);
+        this.upgradeTowersText.setOrigin(0.5);*/
 
         // upgrade ship laser
         this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer');
@@ -247,7 +248,7 @@ class SceneLevel1 extends Phaser.Scene {
                         this, xSpdLocation, 0);
                     
                     spdShip.setScale(randomSize);
-                    this.enemies.add(enemy); 
+                    this.enemies.add(spdShip); 
                 }
                 
    
@@ -462,6 +463,8 @@ class SceneLevel1 extends Phaser.Scene {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
+                    
+                    //this.turrets.add(turret);                     
             energy -= 20;
             energyText.setText('Energy: ' + energy);                      
                 }   

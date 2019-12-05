@@ -37,9 +37,9 @@ class SceneLevel2 extends Phaser.Scene {
         );
 
         // sfx
-        this.load.audio('sndExplode0', 'assets/P3SpaceShooterContent/sndExplode0.wav');
-        this.load.audio('sndExplode1', 'assets/P3SpaceShooterContent/sndExplode1.wav');
-        this.load.audio('sndLaser', 'assets/P3SpaceShooterContent/sndLaser.wav');
+        //this.load.audio('sndExplode0', 'assets/P3SpaceShooterContent/sndExplode0.wav');
+        //this.load.audio('sndExplode1', 'assets/P3SpaceShooterContent/sndExplode1.wav');
+        //this.load.audio('sndLaser', 'assets/P3SpaceShooterContent/sndLaser.wav');
     }
 
     create() {
@@ -73,6 +73,7 @@ class SceneLevel2 extends Phaser.Scene {
             repeat: 0
         });
 
+/*
         // sfx
         this.sfx = {
             explosions: [
@@ -80,7 +81,7 @@ class SceneLevel2 extends Phaser.Scene {
                 this.sound.add('sndExplode1')
             ],
             laser: this.sound.add('sndLaser')
-        };
+        };*/
 
         this.drawLines();  // draw grid lines
 
@@ -149,12 +150,12 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeText.setOrigin(0.5);
 
         // upgrade turret
-        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 192, 'probe2');
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 320, 'probe2');
         this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
         this.upgradeTurretButton.setScale(1);
 
         // upgrade turret text
-        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 1', {
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 368, 'Turret\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -162,6 +163,7 @@ class SceneLevel2 extends Phaser.Scene {
         });
         this.upgradeTurretText.setOrigin(0.5);
 
+        /*
         // upgrade towers
         this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower2');
         this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
@@ -174,7 +176,7 @@ class SceneLevel2 extends Phaser.Scene {
             color: '#ffffff',
             align: 'center'
         });
-        this.upgradeTowersText.setOrigin(0.5);
+        this.upgradeTowersText.setOrigin(0.5);*/
 
         // upgrade ship laser
         this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer2');
