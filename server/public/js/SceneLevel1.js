@@ -426,7 +426,7 @@ class SceneLevel1 extends Phaser.Scene {
             energy -= 10;
             energyText.setText('Energy: ' + energy);            
             //energyText.setText('Energy: ' + energy);
-            console.log(energy);
+            //console.log(energy);
             this.turretType = 1;
             this.upgradeShipText.setText('Ship\nLevel 2'); 
             
