@@ -455,21 +455,11 @@ class SceneLevel3 extends Phaser.Scene {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
-<<<<<<< HEAD
 
                     energy -= 20;
                     energyText.setText('Energy: ' + energy);                     
                 }   
             }
-=======
-          
-            energy -= 20;
-            energyText.setText('Energy: ' + energy);                     
-                }   
-            
-             
-          
->>>>>>> db534e356f13d8ea11a6436e7f8d5a3aca3adaa0
         }
     }
 
@@ -538,18 +528,12 @@ class SceneLevel3 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 35) {
-            deadEnemyCount = 0;            
+        if (deadEnemyCount >= 35) {        
             this.scene.start('SceneVictory');
-<<<<<<< HEAD
-=======
-
->>>>>>> db534e356f13d8ea11a6436e7f8d5a3aca3adaa0
         }
 
         // lose if all towers destroyed
         if (towerCount <= 7) {
-            deadEnemyCount = 0;   
             this.scene.start('SceneGameOver');
         }
     }
