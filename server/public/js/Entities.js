@@ -74,7 +74,7 @@ class Player extends Entity {
                 this.setData('timerShootTick', this.getData('timerShootTick') + 1); // every game update, increase timerShootTick by one until we reach the value of timerShootDelay
             }
             else { // when the 'manual timer' is triggered:
-                if (this.scene.turretType == 1){
+                if (this.scene.turretType == 1) {
                     this.setData('timerShootDelay', 10);
                 var laser = new HomingLaser(this.scene, this.x, this.y);
                 }
@@ -103,7 +103,6 @@ class HomingLaser extends Entity {
         super(scene, x, y, 'sprLaserTurret');
         this.body.velocity.y = -200;
         
-
         this.states = {
         MOVE_DOWN: 'MOVE_DOWN',
         CHASE: 'CHASE'
@@ -111,78 +110,54 @@ class HomingLaser extends Entity {
         this.state = this.states.MOVE_DOWN;        
     }
     
-    
     update() {
-        
         if (!this.getData('isDead') && this.scene.player) {
-        if (this.scene.enemies.getChildren().length > 1)
-        {            
-            
-        var target = this.scene.enemies.getChildren()[0];
-        var closest = 10000;
-        var targetNumber;
+            if (this.scene.enemies.getChildren().length > 1) {            
+                var target = this.scene.enemies.getChildren()[0];
+                var closest = 10000;
+                var targetNumber;
 
-        
-        
-
-            for (var i = 0; i < this.scene.enemies.getChildren().length; i++) {    
-                if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.enemies.getChildren()[i].x, this.scene.enemies.getChildren()[i].y) < closest)
-                {
-                    target = this.scene.enemies.getChildren()[i];
-                    closest = Phaser.Math.Distance.Between(this.x, this.y, this.scene.enemies.getChildren()[i].x, this.scene.enemies.getChildren()[i].y);
+                for (var i = 0; i < this.scene.enemies.getChildren().length; i++) {    
+                    if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.enemies.getChildren()[i].x, this.scene.enemies.getChildren()[i].y) < closest) {
+                        target = this.scene.enemies.getChildren()[i];
+                        closest = Phaser.Math.Distance.Between(this.x, this.y, this.scene.enemies.getChildren()[i].x, this.scene.enemies.getChildren()[i].y);
                     
-                    targetNumber = i
+                        targetNumber = i
+                    }
                 }
             }
 
+            if (this.scene.enemies.getChildren().length > 1) {
+                var randomNum = Phaser.Math.Between(0, (this.scene.enemies.getChildren().length)-1);
             
-        }
-                
-                
-            
-
-
-
-        if (this.scene.enemies.getChildren().length > 1){
-            var randomNum = Phaser.Math.Between(0, (this.scene.enemies.getChildren().length)-1);
-            
-            var enemy = target;
-            
-
+                var enemy = target;
                 this.state = this.states.CHASE;
             
+                if (this.state == this.states.CHASE) {
+                    var dx = enemy.x - this.x;
+                    var dy = enemy.y - this.y;
 
-            if (this.state == this.states.CHASE) {
-                var dx = enemy.x - this.x;
-                var dy = enemy.y - this.y;
+                    var angle = Math.atan2(dy, dx);
 
-                var angle = Math.atan2(dy, dx);
+                    var speed = 200;
+                    this.body.setVelocity(
+                        Math.cos(angle) * speed,
+                        Math.sin(angle) * speed
+                    );
 
-                var speed = 200;
-                this.body.setVelocity(
-                    Math.cos(angle) * speed,
-                    Math.sin(angle) * speed
-                );
-
-                if (this.x < enemy.x) {
-                    this.angle -= 5;
+                    if (this.x < enemy.x) {
+                        this.angle -= 5;
+                    }
+                    else {
+                        this.angle += 5;
+                    } 
                 }
-                else {
-                    this.angle += 5;
-                } 
+                if (enemy.getData('isDead')) {
+                    this.destroy();
+                }           
             }
-            if (enemy.getData('isDead'))
-            {
-                this.destroy();
-            }
-            
-                    
-        }
-        
-
-    }  
+        }  
     }
-    
 }
 
 class EnemyLaser extends Entity {
@@ -312,14 +287,10 @@ class Turret1 extends Entity {
                     //this.scene.sfx.laser.play();
                     this.setData('timerShootTick', 0);                        
                 }
-                
             }
-            
-            
         }
     }
 }
-
 
 class Turret2 extends Entity {
     constructor(scene, x, y) {
@@ -391,14 +362,10 @@ class Turret2 extends Entity {
                     //this.scene.sfx.laser.play();
                     this.setData('timerShootTick', 0);                        
                 }
-                
             }
-            
-            
         }
     }
 }
-
 
 class Turret3 extends Entity {
     constructor(scene, x, y) {
@@ -429,8 +396,7 @@ class Turret3 extends Entity {
                 this.setData('timerShootTick', this.getData('timerShootTick') + 1);
             }
             else {
-                    if (this.scene.turretUpgrade == 0)
-                    {
+                if (this.scene.turretUpgrade == 0) {
                     var rotateleft = -30;
                     var rotateright = 30;
                     var laser = new PlayerLaser(this.scene, this.x, this.y);
@@ -455,8 +421,7 @@ class Turret3 extends Entity {
                     //this.scene.sfx.laser.play();
                     this.setData('timerShootTick', 0);
                 }
-                if (this.scene.turretUpgrade == 1)
-                {
+                if (this.scene.turretUpgrade == 1) {
                     var laser = new PlayerLaser(this.scene, this.x, this.y);
                     var laser2 = new PlayerLaser(this.scene, this.x, this.y);  
                     var laser3 = new PlayerLaser(this.scene, this.x, this.y);                      
@@ -470,10 +435,7 @@ class Turret3 extends Entity {
                     //this.scene.sfx.laser.play();
                     this.setData('timerShootTick', 0);                        
                 }
-                
             }
-            
-            
         }
     }
 }
@@ -483,7 +445,6 @@ class Tower extends Entity {
         super(scene, x, y, key, 'Tower');
     }
 }
-
 
 class ChaserShip extends Entity {
     constructor(scene, x, y) {
@@ -496,45 +457,26 @@ class ChaserShip extends Entity {
         CHASE: 'CHASE'
 
         };
-        this.state = this.states.MOVE_DOWN;
-        
-
-        
-        
+        this.state = this.states.MOVE_DOWN; 
     }
 
     update() {
+        if (!this.getData('isDead') && this.scene.player) { 
+            var target = this.scene.player
+            var closest = 10000;
+            var targetNumber;
         
-        
-        
-        
-
-        if (!this.getData('isDead') && this.scene.player) {
-            
-            
-        var target = this.scene.player
-        var closest = 10000;
-        var targetNumber;
-
-        
-        
-        if (this.scene.towers.getChildren().length > 1)
-        {
-            for (var i = 0; i < this.scene.towers.getChildren().length; i++) {    
-                if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.towers.getChildren()[i].x, this.scene.towers.getChildren()[i].y) < closest)
-                {
-                    target = this.scene.towers.getChildren()[i];
-                    closest = Phaser.Math.Distance.Between(this.x, this.y, this.scene.towers.getChildren()[i].x, this.scene.towers.getChildren()[i].y);
+            if (this.scene.towers.getChildren().length > 1) {
+                for (var i = 0; i < this.scene.towers.getChildren().length; i++) {    
+                    if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.towers.getChildren()[i].x, this.scene.towers.getChildren()[i].y) < closest) {
+                        target = this.scene.towers.getChildren()[i];
+                        closest = Phaser.Math.Distance.Between(this.x, this.y, this.scene.towers.getChildren()[i].x, this.scene.towers.getChildren()[i].y);
                     
-                    targetNumber = i
+                        targetNumber = i
+                    }
                 }
             }
-
-            
-        }
         
-
-            
             if (Phaser.Math.Distance.Between(
                 this.x,
                 this.y,
@@ -550,8 +492,8 @@ class ChaserShip extends Entity {
 
                 var angle = Math.atan2(dy, dx);
                 var speed = 0;                
-                if (this.scene.lvl == 1){
-                speed = 150;
+                if (this.scene.lvl == 1) {
+                    speed = 150;
                 }
                 else {
                     speed = 200;
@@ -564,7 +506,6 @@ class ChaserShip extends Entity {
                 if (this.x < target.x) {
                     this.angle -= 5;
                 }
-                
                 
                 else {
                     this.angle += 5;

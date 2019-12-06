@@ -96,7 +96,6 @@ class SceneLevel1 extends Phaser.Scene {
             laser: this.sound.add('sndLaser')
         };*/
 
-
         this.drawLines();  // draw grid lines
 
         // level text
@@ -178,10 +177,9 @@ class SceneLevel1 extends Phaser.Scene {
         this.upgradeTurretText.setOrigin(0.5);
 
         // upgrade towers
-        //this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower1');
-        //this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
-        //this.upgradeTowersButton.setScale(1);
-
+        /*this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower1');
+        this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
+        this.upgradeTowersButton.setScale(1);*/
         
         // upgrade towers text
         /*this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
@@ -433,8 +431,6 @@ class SceneLevel1 extends Phaser.Scene {
         if (energy >= 10) {
             energy -= 10;
             energyText.setText('Energy: ' + energy);
-            
-            //this.turretUpgrade = 1;
         }
     }
 
@@ -444,29 +440,23 @@ class SceneLevel1 extends Phaser.Scene {
             energyText.setText('Energy: ' + energy);            
             this.turretType = 1;
             this.upgradeShipText.setText('Ship\nLevel 2'); 
-        }
-                
+        }      
     }
 
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
 
-        if (energy > 20)
-        {
-        console.log("test");               
-
-                
-                var turret = this.turrets.get();
-                if (turret) {
-                    turret.setActive(true);
-                    turret.setVisible(true);
-                    turret.place(i, j);
+        if (energy > 20) {              
+            var turret = this.turrets.get();
+            if (turret) {
+                turret.setActive(true);
+                turret.setVisible(true);
+                turret.place(i, j);
                                       
-                    energy -= 20;
-                    energyText.setText('Energy: ' + energy);                      
-                }   
-            }
+                energy -= 20;
+                energyText.setText('Energy: ' + energy);                      
+            }   
         }
     }
 
