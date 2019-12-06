@@ -253,7 +253,7 @@ class SceneLevel2 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 playerLaser.destroy();
-                energy += 10;
+                energy += 2;
                 energyText.setText('Energy: ' + energy);
                 deadEnemyCount += 1;
             }
@@ -266,7 +266,7 @@ class SceneLevel2 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     laser.destroy();
-                    energy += 10;
+                    energy += 2;
                     energyText.setText('Energy: ' + energy);
             }
         });
@@ -512,7 +512,7 @@ class SceneLevel2 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 20) {
+        if (deadEnemyCount >= 30) {
             this.scene.start('level2Trans');
             deadEnemyCount = 0;
         }

@@ -266,7 +266,7 @@ class SceneLevel1 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     enemy.explode(true);
-                    energy += 10;
+                    energy += 2;
                     energyText.setText('Energy: ' + energy);
             }
         });
@@ -279,7 +279,7 @@ class SceneLevel1 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 playerLaser.destroy();
-                energy += 10;
+                energy += 2;
                 energyText.setText('Energy: ' + energy);
                 deadEnemyCount += 1;
             }
@@ -292,7 +292,7 @@ class SceneLevel1 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     laser.destroy();
-                    energy += 10;
+                    energy += 2;
                     energyText.setText('Energy: ' + energy);
             }
         });
@@ -466,7 +466,7 @@ class SceneLevel1 extends Phaser.Scene {
                     turret.place(i, j);
                     
                     //this.turrets.add(turret);                     
-            energy -= 20;
+            energy -= 45;
             energyText.setText('Energy: ' + energy);                      
                 }   
             }
@@ -540,7 +540,8 @@ class SceneLevel1 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 10) {
+        if (deadEnemyCount >= 20) {
+            console.log(deadEnemyCount);
             this.scene.start('level1Trans');
             deadEnemyCount = 0;
         }
