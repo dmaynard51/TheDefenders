@@ -105,7 +105,7 @@ class SceneLevel3 extends Phaser.Scene {
         subLvlText.setOrigin(0.5);
 
         // energy text
-        energy = 50;        
+        energy = 100;        
         energyText = this.add.text(this.game.config.width - 64, 96, 'Energy: ' + energy, {
             fontFamily: 'monospace',
             fontSize: 16,
@@ -456,18 +456,22 @@ class SceneLevel3 extends Phaser.Scene {
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
+     
         if (energy > 20)
         {
-            if (this.canPlaceTurret(i, j)) {
+        console.log("test");               
+
+                        
                 var turret = this.turrets.get();
                 if (turret) {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
-            energy -= 45;
+          
+            energy -= 20;
             energyText.setText('Energy: ' + energy);                     
                 }   
-            }
+            
              
           
         }
@@ -539,12 +543,14 @@ class SceneLevel3 extends Phaser.Scene {
 
         // advance to next level
         if (deadEnemyCount >= 35) {
+            deadEnemyCount = 0;            
             this.scene.start('SceneVictory');
-            deadEnemyCount = 0;
+
         }
 
         // lose if all towers destroyed
         if (towerCount <= 7) {
+            deadEnemyCount = 0;   
             this.scene.start('SceneGameOver');
         }
     }

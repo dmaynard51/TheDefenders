@@ -456,20 +456,24 @@ class SceneLevel1 extends Phaser.Scene {
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
+
         if (energy > 20)
         {
-            if (this.canPlaceTurret(i, j)) {
+        console.log("test");               
+
+                
                 var turret = this.turrets.get();
                 if (turret) {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
+                 
                     
                     //this.turrets.add(turret);                     
-            energy -= 45;
+            energy -= 20;
             energyText.setText('Energy: ' + energy);                      
                 }   
-            }
+            
             
           
         }
@@ -542,12 +546,14 @@ class SceneLevel1 extends Phaser.Scene {
         // advance to next level
         if (deadEnemyCount >= 20) {
             console.log(deadEnemyCount);
+            deadEnemyCount = 0;            
             this.scene.start('level1Trans');
-            deadEnemyCount = 0;
+
         }
 
         // lose if all towers destroyed
         if (towerCount <= 7) {
+            deadEnemyCount = 0;               
             this.scene.start('SceneGameOver');
         }
     }
