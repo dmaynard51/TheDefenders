@@ -100,7 +100,7 @@ class SceneLevel3 extends Phaser.Scene {
         subLvlText.setOrigin(0.5);
 
         // energy text
-        energy = 50;        
+        energy = 100;        
         energyText = this.add.text(this.game.config.width - 64, 96, 'Energy: ' + energy, {
             fontFamily: 'monospace',
             fontSize: 16,
@@ -272,7 +272,7 @@ class SceneLevel3 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 playerLaser.destroy();
-                energy += 10;
+                energy += 2;
                 energyText.setText('Energy: ' + energy);
                 deadEnemyCount += 1;
             }
@@ -285,7 +285,7 @@ class SceneLevel3 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     laser.destroy();
-                    energy += 10;
+                    energy += 2;
                     energyText.setText('Energy: ' + energy);
             }
         });
@@ -444,19 +444,32 @@ class SceneLevel3 extends Phaser.Scene {
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
+     
         if (energy > 20)
         {
-            if (this.canPlaceTurret(i, j)) {
+        console.log("test");               
+
+                        
                 var turret = this.turrets.get();
                 if (turret) {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
+<<<<<<< HEAD
 
                     energy -= 20;
                     energyText.setText('Energy: ' + energy);                     
                 }   
             }
+=======
+          
+            energy -= 20;
+            energyText.setText('Energy: ' + energy);                     
+                }   
+            
+             
+          
+>>>>>>> db534e356f13d8ea11a6436e7f8d5a3aca3adaa0
         }
     }
 
@@ -525,12 +538,18 @@ class SceneLevel3 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 25) {
+        if (deadEnemyCount >= 35) {
+            deadEnemyCount = 0;            
             this.scene.start('SceneVictory');
+<<<<<<< HEAD
+=======
+
+>>>>>>> db534e356f13d8ea11a6436e7f8d5a3aca3adaa0
         }
 
         // lose if all towers destroyed
         if (towerCount <= 7) {
+            deadEnemyCount = 0;   
             this.scene.start('SceneGameOver');
         }
     }

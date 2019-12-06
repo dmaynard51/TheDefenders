@@ -273,8 +273,8 @@ class Turret1 extends Entity {
             else {
                     if (this.scene.turretUpgrade == 0)
                     {
-                    var rotateleft = -30;
-                    var rotateright = 30;
+                    var rotateleft = -50;
+                    var rotateright = 50;
                     var laser = new PlayerLaser(this.scene, this.x, this.y);
                     this.scene.playerLasers.add(laser);
                     
