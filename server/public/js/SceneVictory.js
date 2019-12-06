@@ -25,12 +25,13 @@ class SceneVictory extends Phaser.Scene {
         });
         energyText.setOrigin(0.5);*/
 
-/*
+        /*
         // sfx
         this.sfx = {
             btnOver: this.sound.add('sndBtnOver'),
             btnDown: this.sound.add('sndBtnDown')
-        };*/
+        };
+        */
 
         // restart button
         this.btnRestart = this.add.sprite(

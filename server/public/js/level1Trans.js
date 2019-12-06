@@ -5,16 +5,16 @@ class level1Trans extends Phaser.Scene {
 
     preload() {
         // images
-        this.load.image('sprBg0', 'assets/P3SpaceShooterContent/sprBg0.png');
-        this.load.image('sprBtnPlay', 'assets/P3SpaceShooterContent/sprBtnPlay.png');
-        this.load.image('sprBtnPlayHover', 'assets/P3SpaceShooterContent/sprBtnPlayHover.png');
-        this.load.image('sprBtnPlayDown', 'assets/P3SpaceShooterContent/sprBtnPlayDown.png');
-        this.load.image('sprBtnRestart', 'assets/P3SpaceShooterContent/sprBtnRestart.png');
-        this.load.image('sprBtnRestartHover', 'assets/P3SpaceShooterContent/sprBtnRestartHover.png');
-        this.load.image('sprBtnRestartDown', 'assets/P3SpaceShooterContent/sprBtnRestartDown.png');
+        this.load.image('sprBg0', 'assets//sprBg0.png');
+        this.load.image('sprBtnPlay', 'assets/otherAssets/sprBtnPlay.png');
+        this.load.image('sprBtnPlayHover', 'assets/otherAssets/sprBtnPlayHover.png');
+        this.load.image('sprBtnPlayDown', 'assets/otherAssets/sprBtnPlayDown.png');
+        this.load.image('sprBtnRestart', 'assets/otherAssets/sprBtnRestart.png');
+        this.load.image('sprBtnRestartHover', 'assets/otherAssets/sprBtnRestartHover.png');
+        this.load.image('sprBtnRestartDown', 'assets/otherAssets/sprBtnRestartDown.png');
 
         // sfx
-        //this.load.audio('sndBtnOver', 'assets/P3SpaceShooterContent/sndBtnOver.wav');
+        //this.load.audio('sndBtnOver', 'assets/otherAssets/sndBtnOver.wav');
         //this.load.audio('sndBtnDown', 'assets/ourStuff/ourSounds/boom7_msdn.wav');
     }
 

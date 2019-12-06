@@ -3,7 +3,7 @@ var energyText;
 var lvlText;
 var subLvlText;
 var towerCount;
-var deadEnemyCount = 0;
+var deadEnemyCount;
 
 var map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
@@ -26,9 +26,9 @@ class SceneLevel1 extends Phaser.Scene {
         this.load.image('planet', 'assets/ourStuff/ourBackgrounds/planetSmall.png');
         this.load.image('probe1', 'assets/ourStuff/ourProbes/probe1.png');
         this.load.image('tower1', 'assets/ourStuff/ourTowers/tower1.png');
-        this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
-        this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
-        this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
+        this.load.image('sprEnemy1', 'assets/otherAssets/sprEnemy1.png');       
+        this.load.image('sprLaserEnemy0', 'assets/otherAssets/sprLaserEnemy0.png');
+        this.load.image('sprLaserPlayer', 'assets/otherAssets/sprLaserPlayer.png');
         this.load.image('sprLaserTurret', 'assets/ourStuff/roundBullet.png');
         this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
 
@@ -46,7 +46,7 @@ class SceneLevel1 extends Phaser.Scene {
             { frameWidth: 16, frameHeight: 16 }
         );
         this.load.spritesheet('sprExplosion', 
-            'assets/P3SpaceShooterContent/sprExplosion.png', 
+            'assets/otherAssets/sprExplosion.png', 
             { frameWidth: 32, frameHeight: 32 }
         );
 
@@ -182,9 +182,9 @@ class SceneLevel1 extends Phaser.Scene {
         //this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
         //this.upgradeTowersButton.setScale(1);
 
-        /*
+        
         // upgrade towers text
-        this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
+        /*this.upgradeTowersText = this.add.text(this.game.config.width - 64, 368, 'Towers\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -219,15 +219,13 @@ class SceneLevel1 extends Phaser.Scene {
                 var enemy = null;
                 var spdShip = null;
 
-                    var randomSize = Phaser.Math.Between(10, 20) * 0.1;
-                    var xLocation = Phaser.Math.Between(0, 15 * 64);
-                    var xSpdLocation = Phaser.Math.Between(0, 15 * 64);
-                    var xIncrease = 32;
+                var randomSize = Phaser.Math.Between(10, 20) * 0.1;
+                var xLocation = Phaser.Math.Between(0, 15 * 64);
+                var xSpdLocation = Phaser.Math.Between(0, 15 * 64);
+                var xIncrease = 32;
                     
                 //create wave of 5 enemies at random location
                 for (var i = 0; i < 5; i++) {
-                    
-                    
                     enemy = new BasicShip(
                         this,
                         xLocation + xIncrease,
@@ -238,26 +236,25 @@ class SceneLevel1 extends Phaser.Scene {
                     
                     enemy.setScale(randomSize);
                     this.enemies.add(enemy);   
-                    
-                    }
+                }
                     
                 // randomize speeder ship
                 var randSpeed = Phaser.Math.Between(1, 10);
                 if (randSpeed > 8)
                 {
                     spdShip = new SpeederShip(
-                        this, xSpdLocation, 0);
+                        this, 
+                        xSpdLocation, 
+                        0
+                    );
                     
                     spdShip.setScale(randomSize);
                     this.enemies.add(spdShip); 
                 }
-                
-   
             },
             callbackScope: this,
             loop: true
         });
-
 
         // player-enemy collision
         this.physics.add.overlap(this.player, this.enemies, function(player, enemy) {
@@ -345,9 +342,12 @@ class SceneLevel1 extends Phaser.Scene {
 
         this.axis = 0;
         this.axisIncrease = 0;
+
         //turns turret into a homingturret
         this.turretType = 0;
         this.turretUpgrade = 0;
+
+        deadEnemyCount = 0;
     }
 
     getEnemiesByType(type) {
@@ -442,13 +442,8 @@ class SceneLevel1 extends Phaser.Scene {
         if (energy >= 10) {
             energy -= 10;
             energyText.setText('Energy: ' + energy);            
-            //energyText.setText('Energy: ' + energy);
-            //console.log(energy);
             this.turretType = 1;
             this.upgradeShipText.setText('Ship\nLevel 2'); 
-            
-            
-
         }
                 
     }
@@ -464,14 +459,11 @@ class SceneLevel1 extends Phaser.Scene {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
-                    
-                    //this.turrets.add(turret);                     
-            energy -= 20;
-            energyText.setText('Energy: ' + energy);                      
+                                      
+                    energy -= 20;
+                    energyText.setText('Energy: ' + energy);                      
                 }   
             }
-            
-          
         }
     }
 
@@ -542,7 +534,6 @@ class SceneLevel1 extends Phaser.Scene {
         // advance to next level
         if (deadEnemyCount >= 10) {
             this.scene.start('level1Trans');
-            deadEnemyCount = 0;
         }
 
         // lose if all towers destroyed

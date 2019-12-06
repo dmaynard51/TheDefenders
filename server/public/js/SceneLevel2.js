@@ -1,7 +1,3 @@
-var energy = 50;
-var towerCount;
-var deadEnemyCount = 0;
-
 class SceneLevel2 extends Phaser.Scene {
     constructor() {
         super({ key: 'SceneLevel2' });
@@ -12,9 +8,9 @@ class SceneLevel2 extends Phaser.Scene {
         this.load.image('probe2', 'assets/ourStuff/ourProbes/ourShip.png');
         this.load.image('tower2', 'assets/ourStuff/ourTowers/towerL2.png');
         //this.load.image('bgL2', 'assets/ourStuff/ourBackgrounds/Level2BG.png');
-        this.load.image('sprEnemy1', 'assets/P3SpaceShooterContent/sprEnemy1.png');       
-        this.load.image('sprLaserEnemy0', 'assets/P3SpaceShooterContent/sprLaserEnemy0.png');
-        this.load.image('sprLaserPlayer', 'assets/P3SpaceShooterContent/sprLaserPlayer.png');
+        this.load.image('sprEnemy1', 'assets/otherAssets/sprEnemy1.png');       
+        this.load.image('sprLaserEnemy0', 'assets/otherAssets/sprLaserEnemy0.png');
+        this.load.image('sprLaserPlayer', 'assets/otherAssets/sprLaserPlayer.png');
         this.load.atlas('sprites', 'assets/spritesheet.png', 'assets/spritesheet.json');
 
         // spritesheets
@@ -32,14 +28,14 @@ class SceneLevel2 extends Phaser.Scene {
         );
         
         this.load.spritesheet('sprExplosion', 
-            'assets/P3SpaceShooterContent/sprExplosion.png', 
+            'assets/otherAssets/sprExplosion.png', 
             { frameWidth: 32, frameHeight: 32 }
         );
 
         // sfx
-        //this.load.audio('sndExplode0', 'assets/P3SpaceShooterContent/sndExplode0.wav');
-        //this.load.audio('sndExplode1', 'assets/P3SpaceShooterContent/sndExplode1.wav');
-        //this.load.audio('sndLaser', 'assets/P3SpaceShooterContent/sndLaser.wav');
+        //this.load.audio('sndExplode0', 'assets/otherAssets/sndExplode0.wav');
+        //this.load.audio('sndExplode1', 'assets/otherAssets/sndExplode1.wav');
+        //this.load.audio('sndLaser', 'assets/otherAssets/sndLaser.wav');
     }
 
     create() {
@@ -73,9 +69,8 @@ class SceneLevel2 extends Phaser.Scene {
             repeat: 0
         });
 
-/*
         // sfx
-        this.sfx = {
+        /*this.sfx = {
             explosions: [
                 this.sound.add('sndExplode0'),
                 this.sound.add('sndExplode1')
@@ -163,9 +158,8 @@ class SceneLevel2 extends Phaser.Scene {
         });
         this.upgradeTurretText.setOrigin(0.5);
 
-        /*
         // upgrade towers
-        this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower2');
+        /*this.upgradeTowersButton = this.add.image(this.game.config.width - 64, 320, 'tower2');
         this.upgradeTowersButton.setInteractive().on('pointerdown', this.upgradeTowers);
         this.upgradeTowersButton.setScale(1);
 
@@ -205,20 +199,20 @@ class SceneLevel2 extends Phaser.Scene {
                 var enemy = null;
                 var enemy2 = null;
 
-                    if (this.getEnemiesByType('ChaserShip').length < 5) {
-                        enemy = new ChaserShip(
-                            this,
-                            0,
-                            0
-                        );
-                    }
-                    if (this.getEnemiesByType('ChaserShip').length < 5) {
-                        enemy2 = new ChaserShip(
-                            this,
-                            1000,
-                            0
-                        );
-                    }    
+                if (this.getEnemiesByType('ChaserShip').length < 5) {
+                    enemy = new ChaserShip(
+                        this,
+                        0,
+                        0
+                    );
+                }
+                if (this.getEnemiesByType('ChaserShip').length < 5) {
+                    enemy2 = new ChaserShip(
+                        this,
+                        1000,
+                        0
+                    );
+                }    
                 if (enemy !== null) {
                     enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
                     this.enemies.add(enemy);
@@ -226,7 +220,7 @@ class SceneLevel2 extends Phaser.Scene {
                 if (enemy2 !== null) {
                     enemy2.setScale(Phaser.Math.Between(10, 20) * 0.1);
                     this.enemies.add(enemy2);
-                }                    
+                }                  
                 }
             },
             callbackScope: this,
@@ -319,9 +313,12 @@ class SceneLevel2 extends Phaser.Scene {
 
         this.axis = 0;
         this.axisIncrease = 0;
+
         //turns turret into a homingturret
         this.turretType = 0;
-        this.turretUpgrade = 0;        
+        this.turretUpgrade = 0;    
+        
+        deadEnemyCount = 0;
     }
 
     getEnemiesByType(type) {
@@ -419,9 +416,6 @@ class SceneLevel2 extends Phaser.Scene {
             console.log(energy);
             this.turretType = 1;
             this.upgradeShipText.setText('Ship\nLevel 2'); 
-            
-            
-
         }
                 
     }
@@ -437,12 +431,11 @@ class SceneLevel2 extends Phaser.Scene {
                     turret.setActive(true);
                     turret.setVisible(true);
                     turret.place(i, j);
-            energy -= 20;
-            energyText.setText('Energy: ' + energy);                        
+
+                    energy -= 20;
+                    energyText.setText('Energy: ' + energy);                        
                 }   
             }
-          
-          
         }
     }
 
@@ -514,7 +507,6 @@ class SceneLevel2 extends Phaser.Scene {
         // advance to next level
         if (deadEnemyCount >= 20) {
             this.scene.start('level2Trans');
-            deadEnemyCount = 0;
         }
 
         // lose if all towers destroyed
