@@ -445,19 +445,20 @@ class SceneLevel1 extends Phaser.Scene {
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
-
-        if (energy > 20) {              
-            var turret = this.turrets.get();
-            if (turret) {
-                turret.setActive(true);
-                turret.setVisible(true);
-                if (this.canPlaceTurret(i, j)) {
-                    turret.place(i, j);
+        if (this.canPlaceTurret(i, j)) {
+            if (energy > 20) {              
+                var turret = this.turrets.get();
+                if (turret) {
+                    turret.setActive(true);
+                    turret.setVisible(true);
+    
+                        turret.place(i, j);
+                    
+                                          
+                    energy -= 20;
+                    energyText.setText('Energy: ' + energy);                      
                 }
-                                      
-                energy -= 20;
-                energyText.setText('Energy: ' + energy);                      
-            }   
+            }
         }
     }
 
