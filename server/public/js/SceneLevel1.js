@@ -219,8 +219,8 @@ class SceneLevel1 extends Phaser.Scene {
                 var spdShip = null;
 
                 var randomSize = Phaser.Math.Between(10, 20) * 0.1;
-                var xLocation = Phaser.Math.Between(0, 15 * 64);
-                var xSpdLocation = Phaser.Math.Between(0, 15 * 64);
+                var xLocation = Phaser.Math.Between(0, 800);
+                var xSpdLocation = Phaser.Math.Between(0, 900);
                 var xIncrease = 32;
                     
                 //create wave of 5 enemies at random location
@@ -527,6 +527,7 @@ class SceneLevel1 extends Phaser.Scene {
 
         // advance to next level
         if (deadEnemyCount >= 20) {      
+            deadEnemyCount = 0;            
             this.scene.start('level1Trans');
         }
 

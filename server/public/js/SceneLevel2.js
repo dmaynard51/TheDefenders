@@ -219,7 +219,7 @@ class SceneLevel2 extends Phaser.Scene {
                 if (this.getEnemiesByType('ChaserShip').length < 5) {
                     enemy2 = new ChaserShip(
                         this,
-                        1000,
+                        900,
                         0
                     );
                 }    
@@ -511,7 +511,8 @@ class SceneLevel2 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 30) {        
+        if (deadEnemyCount >= 30) { 
+            deadEnemyCount = 0;
             this.scene.start('level2Trans');
         }
 
