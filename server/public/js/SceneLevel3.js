@@ -146,12 +146,12 @@ class SceneLevel3 extends Phaser.Scene {
         this.upgradeText.setOrigin(0.5);
 
         // upgrade turret
-        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 320, 'probe3');
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 208, 'probe1');
         this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
         this.upgradeTurretButton.setScale(1);
-
+    
         // upgrade turret text
-        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 368, 'Turret\nLevel 1', {
+        this.upgradeTurretText = this.add.text(this.game.config.width - 64, 240, 'Turret\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -174,12 +174,12 @@ class SceneLevel3 extends Phaser.Scene {
         this.upgradeTowersText.setOrigin(0.5);*/
 
         // upgrade ship laser
-        this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 128, 'sprPlayer');
+        this.upgradeShipButton = this.add.image(this.game.config.width - 64, this.game.config.height - 176, 'sprPlayer');
         this.upgradeShipButton.setInteractive().on('pointerdown', this.upgradeShip);
         this.upgradeShipButton.setScale(1);
 
         // upgrade ship text
-        this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 80, 'Ship\nLevel 3', {
+        this.upgradeShipText = this.add.text(this.game.config.width - 64, this.game.config.height - 128, 'Ship\nLevel 1', {
             fontFamily: 'monospace',
             fontSize: 10,
             color: '#ffffff',
@@ -272,7 +272,7 @@ class SceneLevel3 extends Phaser.Scene {
                 }
                 enemy.explode(true);
                 playerLaser.destroy();
-                energy += 2;
+                energy += 10;
                 energyText.setText('Energy: ' + energy);
                 deadEnemyCount += 1;
             }
@@ -285,7 +285,7 @@ class SceneLevel3 extends Phaser.Scene {
                     player.explode(false);
                     player.onDestroy();
                     laser.destroy();
-                    energy += 2;
+                    energy += 10;
                     energyText.setText('Energy: ' + energy);
             }
         });
@@ -402,10 +402,8 @@ class SceneLevel3 extends Phaser.Scene {
         graphics.lineTo(this.game.config.width, 64);
         graphics.moveTo(this.game.config.width - 128, 128);
         graphics.lineTo(this.game.config.width, 128);
-        graphics.moveTo(this.game.config.width - 128, 256);
-        graphics.lineTo(this.game.config.width, 256);
-        graphics.moveTo(this.game.config.width - 128, this.game.config.height - 192);
-        graphics.lineTo(this.game.config.width, this.game.config.height - 192);
+        graphics.moveTo(this.game.config.width - 128, this.game.config.height - 256);
+        graphics.lineTo(this.game.config.width, this.game.config.height - 256);
         graphics.moveTo(this.game.config.width - 128, this.game.config.height - 64);
         graphics.lineTo(this.game.config.width, this.game.config.height - 64);
         graphics.strokePath();
