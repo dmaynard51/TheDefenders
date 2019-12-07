@@ -495,8 +495,12 @@ class ChaserShip extends Entity {
                 if (this.scene.lvl == 1) {
                     speed = 150;
                 }
-                else {
+                if (this.scene.lvl == 2) {
                     speed = 200;
+                }
+                if (this.scene.lvl == 3)
+                {
+                    speed = 300;
                 }
                 this.body.setVelocity(
                     Math.cos(angle) * speed,
