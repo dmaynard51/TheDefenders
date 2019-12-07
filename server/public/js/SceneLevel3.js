@@ -39,6 +39,17 @@ class SceneLevel3 extends Phaser.Scene {
     }
 
     create() {
+        
+        // create map
+        map = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+              [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+              [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+              [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+              [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+              [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+              [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1],
+              [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+              [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]];        
         //Background
         this.add.image(512, 288, 'bgL3');
 
@@ -202,8 +213,8 @@ class SceneLevel3 extends Phaser.Scene {
                 var spdShip = null;
 
                 var randomSize = Phaser.Math.Between(10, 20) * 0.1;
-                var xLocation = Phaser.Math.Between(0, 15 * 64);
-                var xSpdLocation = Phaser.Math.Between(0, 15 * 64);
+                var xLocation = Phaser.Math.Between(0, 800);
+                var xSpdLocation = Phaser.Math.Between(0, 900);
                 var xIncrease = 32;
                     
                 //create wave of 5 enemies at random location
@@ -444,16 +455,18 @@ class SceneLevel3 extends Phaser.Scene {
     placeTurret = (pointer) => {
         var i = Math.floor(pointer.y / 64);
         var j = Math.floor(pointer.x / 64);
-     
-        if (energy > 20) {                        
+
+        if (energy > 20) {              
             var turret = this.turrets.get();
             if (turret) {
                 turret.setActive(true);
                 turret.setVisible(true);
-                turret.place(i, j);
-
+                if (this.canPlaceTurret(i, j)) {
+                    turret.place(i, j);
+                }
+                                      
                 energy -= 20;
-                energyText.setText('Energy: ' + energy);                     
+                energyText.setText('Energy: ' + energy);                      
             }   
         }
     }
@@ -523,7 +536,7 @@ class SceneLevel3 extends Phaser.Scene {
         }
 
         // advance to next level
-        if (deadEnemyCount >= 40) {    
+        if (deadEnemyCount >= 60) {    
             deadEnemyCount = 0;            
             this.scene.start('SceneVictory');
         }
