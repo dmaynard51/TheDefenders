@@ -5,7 +5,7 @@ class SceneLevel2 extends Phaser.Scene {
   
     preload() {
         // images
-        this.load.image('probe2', 'assets/ourStuff/ourProbes/ourShip.png');
+        this.load.image('probe2', 'assets/ourStuff/ourProbes/probe2.png');
         this.load.image('tower2', 'assets/ourStuff/ourTowers/towerL2.png');
         //this.load.image('bgL2', 'assets/ourStuff/ourBackgrounds/Level2BG.png');
         this.load.image('sprEnemy1', 'assets/otherAssets/sprEnemy1.png');       
@@ -155,7 +155,7 @@ class SceneLevel2 extends Phaser.Scene {
         this.upgradeText.setOrigin(0.5);
 
         // upgrade turret
-        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 208, 'probe1');
+        this.upgradeTurretButton = this.add.image(this.game.config.width - 64, 208, 'probe2');
         this.upgradeTurretButton.setInteractive().on('pointerdown', this.upgradeTurret);
         this.upgradeTurretButton.setScale(1);
     

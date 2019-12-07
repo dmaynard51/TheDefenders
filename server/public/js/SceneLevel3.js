@@ -5,7 +5,7 @@ class SceneLevel3 extends Phaser.Scene {
   
     preload() {
         // images
-        this.load.image('probe3', 'assets/ourStuff/ourProbes/probe2.png');
+        this.load.image('probe3', 'assets/ourStuff/ourProbes/probe3.png');
         this.load.image('tower3', 'assets/ourStuff/ourTowers/towerL3.png');
 
         this.load.image('sprEnemy1', 'assets/otherAssets/sprEnemy1.png');       
