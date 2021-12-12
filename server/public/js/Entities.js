@@ -1,4 +1,4 @@
-/*  Author: Patrick Dicks
+/*  Author: Daniel Maynard
 *   Title: Defenders
 *   License: MIT
 *   Entities.js

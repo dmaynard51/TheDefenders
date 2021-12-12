@@ -1,4 +1,4 @@
-/*  Author: Patrick Dicks
+/*  Author: Daniel Maynard
 *   Title: Defenders
 *   License: MIT
 *   Level1Trans.js
