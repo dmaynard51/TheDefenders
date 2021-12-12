@@ -1,0 +1,23 @@
+{
+  "name": "defenders",
+  "version": "1.0.0",
+  "description": "HTML5 game which utilizes the Phaser 3 game framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dmaynard51/TheDefenders.git"
+  },
+  "author": "Daniel Maynard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patrickdicks/Defenders/issues"
+  },
+  "homepage": "https://github.com/dmaynard51/TheDefenders#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
